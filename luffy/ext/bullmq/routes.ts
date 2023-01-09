@@ -4,7 +4,7 @@ import Router from "../../routes";
 class BullMQRouter extends Router {
     constructor(
         queueName: string,
-        handler: Function,
+        handler: any,
         name: string,
         ...args: any[]
     ) {

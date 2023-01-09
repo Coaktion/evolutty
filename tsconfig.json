@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "esModuleInterop": true,
+        "outDir": "dist",
+        "module": "commonjs",
+        "target": "es6",
+        "sourceMap": true,
+        "allowJs": true,
+        "moduleResolution": "node",
+        "baseUrl": "."
+    },
+    "include": ["./luffy/**/*"],
+}

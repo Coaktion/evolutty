@@ -1,7 +1,7 @@
-import dotenv from 'dotenv';
+import { config as dotenvConfig } from 'dotenv';
 import { join } from 'path';
 
-dotenv.config({ path: join(__dirname, '../.env') });
+dotenvConfig({ path: join(__dirname, '../.env') });
 
 const config = {
     bullmq: {
