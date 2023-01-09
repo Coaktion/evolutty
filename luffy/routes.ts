@@ -19,21 +19,10 @@ class Router {
         errorHandler: any = null
     ) {
         this.name = name;
-        if (provider instanceof AbstractProvider) {
-            throw new Error("Provider must be an instance of AbstractProvider");
-        }
-
         this.provider = provider;
-        if(messageTranslator && !(messageTranslator instanceof AbstractMessageTranslator)) {
-            throw new Error("Message translator must be an instance of AbstractMessageTranslator");
-        }
-
         this.messageTranslator = messageTranslator;
-        if (errorHandler && typeof errorHandler !== "function") {
-            throw new Error("Error handler must be a function");
-        }
-
         this._errorHandler = errorHandler;
+        
         if (typeof handler === "function") {
             this.handler = handler;
             this._handlerInstance = null
@@ -69,7 +58,7 @@ class Router {
         try {
             await this.handler(message.content, message.metadata, this._handlerInstance);
             await this.provider.confirmMessage(rawMessage);
-        } catch (e) {
+        } catch (e: any) {
             logging.error(`Error while processing message: ${e}`);
             if (this.errorHandler) {
                 await this.errorHandler(e, rawMessage);

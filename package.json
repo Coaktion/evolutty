@@ -2,14 +2,14 @@
   "name": "luffy",
   "version": "0.0.1",
   "description": "",
-  "main": "index.ts",
+  "main": "dist/luffy/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module",
+  "type": "commonjs",
   "dependencies": {
     "@sentry/node": "^7.29.0",
     "@sentry/tracing": "^7.29.0",

@@ -1,12 +1,12 @@
 class LuffyManager {
   routes: any;
-  constructor(routes) {
+  constructor(routes: any) {
     this.routes = routes;
   }
 
   start() {
     for (const route of this.routes) {
-      new route.handler(route.queueName);
+      new route.handler(route.provider.queueName);
     }
   }
 }
