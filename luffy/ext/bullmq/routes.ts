@@ -1,7 +1,7 @@
 import BullMQProvider from "./provider";
 import Router from "../../routes";
 
-export default class BullMQRouter extends Router {
+class BullMQRouter extends Router {
     constructor(
         queueName: string,
         handler: Function,
@@ -13,6 +13,10 @@ export default class BullMQRouter extends Router {
         }
 
         name = name || queueName;
+
         super(new BullMQProvider(queueName), handler, ...args);
     }
 }
+
+
+export default BullMQRouter;
