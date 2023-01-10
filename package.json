@@ -2,14 +2,24 @@
   "name": "evolutty",
   "version": "0.0.1",
   "description": "",
-  "main": "dist/evolutty/index.js",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "source": "./src/index.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dc:up": "docker-compose -f docker-compose.yml up -d",
+    "dc:down": "docker-compose -f docker-compose.yml down",
+    "eslint:fix": "./node_modules/.bin/eslint . --ignore-path ./.eslintignore --fix",
+    "lint": "./node_modules/.bin/eslint . --ignore-path ./.eslintignore",
+    "tsc": "tsc",
+    "tsc:all": "tsc && tsc -p tsconfig-cjs.json"
   },
   "keywords": [],
   "author": "Paulo Tinoco <paulovictortinoco@gmail.com>",
   "license": "MIT",
-  "type": "commonjs",
   "dependencies": {
     "@sentry/node": "^7.29.0",
     "@sentry/tracing": "^7.29.0",
