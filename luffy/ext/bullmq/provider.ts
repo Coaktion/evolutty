@@ -1,6 +1,7 @@
 import { Queue } from "bullmq";
 import AbstractProvider from "../../providers";
 import logging from "../../logging";
+import config from "../../config";
 
 export default class BullMQProvider extends AbstractProvider {
     provider: Queue<any, any, string>;
@@ -10,7 +11,8 @@ export default class BullMQProvider extends AbstractProvider {
         ...args: any[]
     ) {
         super();
-        this.provider = new Queue(queueName);
+        const connection = config.bullmq.connection;
+        this.provider = new Queue(queueName, {connection});
         this.queueName = queueName;
     }
 

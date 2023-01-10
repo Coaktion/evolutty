@@ -2,6 +2,7 @@ import {createLogger, format, transports} from 'winston';
 
 const logging = createLogger({
     format: format.combine(
+        format.timestamp({format: 'YYYY-MM-DD HH:mm:ss'}),
         format.errors({ stack: true }),
         format.json()
     ),

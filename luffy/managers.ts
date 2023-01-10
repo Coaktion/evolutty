@@ -1,3 +1,5 @@
+import logging from "./logging";
+
 class LuffyManager {
   routes: any;
   constructor(routes: any) {
@@ -8,6 +10,7 @@ class LuffyManager {
     for (const route of this.routes) {
       new route.handler(route.provider.queueName);
     }
+    logging.info("Luffy started");
   }
 }
 
