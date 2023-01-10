@@ -1,4 +1,4 @@
-import BullMQHandler from "../../src/ext/bullmq/handler";
+import { BullMQHandler } from "../../src/";
 
 class MyHandler extends BullMQHandler {
     constructor(queueName: string) {

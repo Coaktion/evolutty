@@ -1,5 +1,5 @@
-import EvouttyManager from "../../src/managers";
+import {EvoluttyManager} from "../../src";
 import routers from "./routes";
 
-const manager = new EvouttyManager(routers);
+const manager = new EvoluttyManager(routers);
 manager.start();

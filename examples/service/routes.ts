@@ -1,4 +1,4 @@
-import BullMQRouter from "../../src/ext/bullmq/routes";
+import { BullMQRouter } from "../../src";
 import MyHandler from "./handlers";
 
 const routers = [
