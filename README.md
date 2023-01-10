@@ -1,4 +1,4 @@
-**luffy** is an asynchronous message dispatcher for concurrent tasks processing, with the following features:
+**evolutty** is an asynchronous message dispatcher for concurrent tasks processing, with the following features:
 
 * Encourages decoupling from message providers and consumers
 * Easy to extend and customize
