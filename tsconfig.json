@@ -17,10 +17,10 @@
     "strictNullChecks": false,
     "baseUrl": ".",
     "paths": {
-      "@src/*": ["luffy/*"]
+      "@src/*": ["src/*"]
     },
     "lib": ["esnext"]
   },
-  "include": ["luffy", "examples"],
+  "include": ["src", "examples"],
   "exclude": ["node_modules", "dist", "tests/*"]
 }

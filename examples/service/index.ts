@@ -1,5 +1,5 @@
-import LuffyManager from "../../luffy/managers";
+import EvouttyManager from "../../src/managers";
 import routers from "./routes";
 
-const manager = new LuffyManager(routers);
+const manager = new EvouttyManager(routers);
 manager.start();

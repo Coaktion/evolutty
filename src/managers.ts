@@ -1,6 +1,6 @@
 import logging from "./logging";
 
-class LuffyManager {
+class EvoluttyManager {
   routes: any;
   constructor(routes: any) {
     this.routes = routes;
@@ -10,8 +10,8 @@ class LuffyManager {
     for (const route of this.routes) {
       new route.handler(route.provider.queueName);
     }
-    logging.info("Luffy started");
+    logging.info("Evolutty started");
   }
 }
 
-export default LuffyManager;
+export default EvoluttyManager;

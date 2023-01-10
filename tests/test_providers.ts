@@ -1,4 +1,4 @@
-import AbstractProvider from "../luffy/providers";
+import AbstractProvider from "../src/providers";
 
 describe("AbstractProvider", () => {
     it("should throw an error when calling fetchMessages", () => {
