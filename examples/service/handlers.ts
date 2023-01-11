@@ -1,12 +1,10 @@
+import { Job } from "bullmq";
 import { BullMQHandler } from "../../src/";
 
-class MyHandler extends BullMQHandler {
-    constructor(queueName: string) {
-        super(queueName);
-    }
 
-    async handle(message: any) {
-        console.log(message);
+class MyHandler extends BullMQHandler {
+    async handle(job: Job, token: string) {
+        console.log(job, token);
     }
 }
 

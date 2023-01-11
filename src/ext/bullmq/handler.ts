@@ -1,16 +1,7 @@
-import { Worker } from "bullmq";
-import config from "../../config";
+import { Job } from "bullmq";
 
 class BullMQHandler {
-    queueName: any;
-    worker: Worker<any, any, string>;
-    constructor(queueName: any) {
-        const connection = config.bullmq.connection;
-        this.queueName = queueName || "default";
-        this.worker = new Worker(this.queueName, this.handle, {connection});
-    }
-    
-    async handle(message: any) {
+    async handle(job: Job, token: string) {
         throw new Error("Not implemented");
     }
 }

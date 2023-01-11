@@ -1,7 +1,8 @@
-import BullMQProvider from "./provider";
-import Router from "../../routes";
+import { Worker } from "bullmq";
+import config from "../../config";
 
-class BullMQRouter extends Router {
+class BullMQRouter {
+    queueName: string;
     constructor(
         queueName: string,
         handler: any,
@@ -11,7 +12,10 @@ class BullMQRouter extends Router {
             throw new Error("Queue name must be provided");
         }
 
-        super(new BullMQProvider(queueName), handler, ...args);
+        this.queueName = queueName;
+        const {connection, concurrency} = config.bullmq;
+        const instanceHandler = new handler();
+        new Worker(queueName, instanceHandler.handle, {connection, concurrency});
     }
 }
 

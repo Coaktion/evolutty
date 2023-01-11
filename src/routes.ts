@@ -32,7 +32,7 @@ class Router {
         }
     }
 
-    applyMessageTranslator(message: string): {content: any, metadata: {}} {
+    applyMessageTranslator(message: string): {content: any, metadata: object} {
         const processedMessage = {content: message, metadata: {}};
         if (!this.messageTranslator) {
             return processedMessage;

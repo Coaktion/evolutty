@@ -10,6 +10,7 @@ const config = {
             username: process.env.REDIS_USERNAME,
             password: process.env.REDIS_PASSWORD,
         },
+        concurrency: parseInt(process.env.BULLMQ_CONCURRENCY) || 1,
     }
 };
 

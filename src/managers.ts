@@ -8,7 +8,7 @@ class EvoluttyManager {
 
   start() {
     for (const route of this.routes) {
-      new route.handler(route.provider.queueName);
+      new route.routeType(route.queueName, route.handler);
     }
     logging.info("Evolutty started");
   }
