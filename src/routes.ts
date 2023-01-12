@@ -17,18 +17,8 @@ class Router {
         this.provider = provider;
         this.messageTranslator = messageTranslator;
         this._errorHandler = errorHandler;
-        
-        if (typeof handler === "function") {
-            this.handler = handler;
-            this._handlerInstance = null;
-        } else {
-            this.handler = handler.handle;
-            this._handlerInstance = handler;
-        }
-
-        if (!this.handler) {
-            throw new Error("Handler must be a function or an object with a `handle` method");
-        }
+        this.handler = handler;
+        this._handlerInstance = null;
     }
 
     applyMessageTranslator(message: string): {content: any, metadata: object} {

@@ -4,6 +4,7 @@ class BullMQRouter {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     protected functionFake: Function = () => {};
     queueName: string;
+    handler: any;
     constructor(
         queueName: string,
         handler: any,
@@ -15,7 +16,7 @@ class BullMQRouter {
 
         this.queueName = queueName;
         const {connection, concurrency} = config.bullmq;
-        new handler(this.queueName, this.functionFake, {connection, concurrency}, ...args);
+       this.handler = new handler(this.queueName, this.functionFake, {connection, concurrency}, ...args);
     }
 }
 
