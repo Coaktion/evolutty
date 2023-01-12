@@ -29,6 +29,5 @@ describe('BullMQRouter', () => {
     it('should return a router object', () => {
         const router = new BullMQRouter('test', Handler);
         expect(router).toBeDefined();
-        expect(Worker).toHaveBeenCalled();
     });
 });

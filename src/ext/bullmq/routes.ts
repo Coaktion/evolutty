@@ -1,7 +1,8 @@
-import { Worker } from "bullmq";
 import config from "../../config";
 
 class BullMQRouter {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    protected functionFake: Function = () => {};
     queueName: string;
     constructor(
         queueName: string,
@@ -14,8 +15,7 @@ class BullMQRouter {
 
         this.queueName = queueName;
         const {connection, concurrency} = config.bullmq;
-        const instanceHandler = new handler();
-        new Worker(queueName, instanceHandler.handle, {connection, concurrency});
+        new handler(this.queueName, this.functionFake, {connection, concurrency}, ...args);
     }
 }
 

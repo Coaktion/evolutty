@@ -5,5 +5,5 @@ export { default as AbstractMessageTranslator } from './providers';
 export { default as EvoluttyManager } from './managers';
 export { default as Router } from './routes';
 export { default as BullMQRouter } from './ext/bullmq/routes';
-export { default as BullMQHandler } from './ext/bullmq/handler';
+export { BullMQHandler } from './ext/bullmq/handler';
 export { BullMQMessageTranslator } from './ext/bullmq/message-translators';

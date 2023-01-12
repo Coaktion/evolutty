@@ -1,5 +1,4 @@
-import { Job } from 'bullmq';
-import BullMQHandler from '../../../src/ext/bullmq/handler';
+import { BullMQHandler } from '../../../src/ext/bullmq/handler';
 
 describe('BullMQHandler', () => {
     it('should return a handler object', () => {
@@ -7,7 +6,7 @@ describe('BullMQHandler', () => {
     });
     
     it('should throw an error when calling handle', async () => {
-        const handler = new BullMQHandler();
-        await expect(handler.handle({} as Job, 'token')).rejects.toThrowError('Not implemented');
+        const handler = new BullMQHandler('test');
+        await expect(handler.handle({}, {})).rejects.toThrowError('Not implemented');
     });
 });
