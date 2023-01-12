@@ -28,7 +28,7 @@ class Router {
         }
 
         const translated = this.messageTranslator.translate(processedMessage.content);
-        processedMessage.metadata = translated.metadata || {};
+        processedMessage.metadata = translated.metadata;
         processedMessage.content = translated.content;
 
         if (!processedMessage.content) {

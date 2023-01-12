@@ -3,7 +3,7 @@ import { BullMQMessageTranslator } from "./message-translators";
 
 
 class BullMQHandler extends Worker {
-  constructor(queueName: string, processor?: any, options: any = {}, Connection?: any) {
+  constructor(queueName: string, processor?: any, options?: any, Connection?: any) {
     super(queueName, processor, options, Connection);
   }
 
