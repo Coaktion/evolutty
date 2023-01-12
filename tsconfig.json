@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "types": ["node"],
+    "types": ["node", "jest"],
     "target": "ES2017",
     "module": "ES2020",
     "declaration": true,
@@ -12,7 +12,7 @@
     "jsx": "preserve",
     "importHelpers": true,
     "moduleResolution": "node",
-    "esModuleInterop": false,
+    "esModuleInterop": true,
     "allowSyntheticDefaultImports": false,
     "strictNullChecks": false,
     "baseUrl": ".",

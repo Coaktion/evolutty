@@ -1,6 +1,6 @@
 {
   "name": "evolutty",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
@@ -10,6 +10,8 @@
     "dist"
   ],
   "scripts": {
+    "run": "ts-node ./src/index.ts",
+    "test": "jest",
     "dc:up": "docker-compose -f docker-compose.yml up -d",
     "dc:down": "docker-compose -f docker-compose.yml down",
     "eslint:fix": "./node_modules/.bin/eslint . --ignore-path ./.eslintignore --fix",

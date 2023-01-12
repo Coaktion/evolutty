@@ -1,4 +1,3 @@
-import logging from "./logging";
 import AbstractProvider from "./providers";
 
 
@@ -49,28 +48,7 @@ class Router {
         return processedMessage;
     }
 
-    async deliver(rawMessage: string) {
-        const message = this.applyMessageTranslator(rawMessage);
-        try {
-            await this.handler(message.content, message.metadata, this._handlerInstance);
-            await this.provider.confirmMessage(rawMessage);
-        } catch (e: any) {
-            logging.error(`Error while processing message: ${e}`);
-            if (this.errorHandler) {
-                await this.errorHandler(e, rawMessage);
-            }
-            await this.provider.messageNotProcessed(rawMessage);
-        }
-    }
-
-    async errorHandler(e: Error, rawMessage: string) {
-        logging.error(`Error while processing message: ${e}`);
-        if (this._errorHandler) {
-            await this._errorHandler(e, rawMessage);
-        }
-        await this.provider.messageNotProcessed(rawMessage);
-    }
-
+    
     stop() {
         this.provider.stop();
     }
