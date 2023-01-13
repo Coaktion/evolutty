@@ -32,4 +32,4 @@ jobs:
         env:
           CC_TEST_REPORTER_ID: 0469edb00d3b903cb8dfe47f330b235479cf1cc5ae136de37f51bf0f0af737db
         with:
-          coverageCommand: npm run lcov
+          coverageCommand: npm test --reporter=lcov
