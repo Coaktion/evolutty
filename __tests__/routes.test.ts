@@ -43,7 +43,7 @@ describe('Router', () => {
         });
     });
 
-    it('must perform instance stop', () => {
+    it('should calling stop provider when call stop router method', () => {
         const router = new Router(provider, handler);
         const spy = jest.spyOn(provider, 'stop');
         router.stop();
