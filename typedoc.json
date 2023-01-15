@@ -5,7 +5,7 @@
   "searchInComments": true,
   "entryPoints": ["./src/index.ts"],
   "out": "public",
-  "name": "SQS Consumer",
+  "name": "Evolutty",
   "hideGenerator": true,
   "navigationLinks": {
     "GitHub": "https://github.com/paulo-tinoco/evolutty"
