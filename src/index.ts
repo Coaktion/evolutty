@@ -7,3 +7,6 @@ export { default as Router } from './routes';
 export { default as BullMQRouter } from './ext/bullmq/routes';
 export { BullMQHandler } from './ext/bullmq/handler';
 export { BullMQMessageTranslator } from './ext/bullmq/message-translators';
+export { SQSQueueRouter } from './ext/sqs/routes';
+export { SQSQueueTranslator } from './ext/sqs/message-translators';
+export { SQSQueueHandler } from './ext/sqs/handlers';

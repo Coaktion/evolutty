@@ -5,8 +5,6 @@ class Router {
     provider: AbstractProvider | any;
     messageTranslator: any;
     handler: Function;
-    private _handlerInstance: Function;
-    private _errorHandler: Function;
 
     constructor(
         provider: any,
@@ -16,9 +14,7 @@ class Router {
     ) {
         this.provider = provider;
         this.messageTranslator = messageTranslator;
-        this._errorHandler = errorHandler;
         this.handler = handler;
-        this._handlerInstance = null;
     }
 
     applyMessageTranslator(message: string): {content: any, metadata: object} {

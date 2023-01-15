@@ -2,14 +2,17 @@
   "name": "evolutty",
   "version": "0.1.1",
   "description": "",
-  "main": "./dist/cjs/index.js",
+  "main": "./dist/esm/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/esm/index.d.ts",
   "source": "./src/index.ts",
+  "type": "module",
   "files": [
     "dist"
   ],
   "scripts": {
+    "clean": "rm -fr dist/*",
+    "build": "npm run clean && tsc",
     "run": "ts-node ./src/index.ts",
     "test": "jest",
     "dc:up": "docker-compose -f docker-compose.yml up -d",
@@ -17,7 +20,7 @@
     "eslint:fix": "./node_modules/.bin/eslint . --ignore-path ./.eslintignore --fix",
     "lint": "./node_modules/.bin/eslint . --ignore-path ./.eslintignore",
     "tsc": "tsc",
-    "tsc:all": "tsc && tsc -p tsconfig-cjs.json",
+    "tsc:all": "tsc",
     "ci": "npm run lint && npm run tsc:all && npm run test",
     "generate-docs": "typedoc"
   },
@@ -29,6 +32,7 @@
     "@sentry/tracing": "^7.29.0",
     "bullmq": "^3.5.2",
     "dotenv": "^16.0.3",
+    "sqs-consumer": "^6.1.0",
     "winston": "^3.8.2"
   },
   "devDependencies": {

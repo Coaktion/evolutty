@@ -1,4 +1,4 @@
-import { BullMQHandler } from "../../src/";
+import { BullMQHandler } from "../../src";
 
 
 class MyHandler extends BullMQHandler {
