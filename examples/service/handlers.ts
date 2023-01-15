@@ -1,11 +1,10 @@
-import { BullMQHandler } from "../../src/";
-
+import { BullMQHandler } from '../../src/';
 
 class MyHandler extends BullMQHandler {
-    async handle(content: object, metadata: object): Promise<boolean> {
-        console.log(content, metadata);
-        return true;
-    }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async handle(content: object, metadata: object): Promise<boolean> {
+    return true;
+  }
 }
 
 export default MyHandler;

@@ -1,4 +1,4 @@
-import logging from "./logging";
+import logging from './logging';
 
 class EvoluttyManager {
   routes: any;
@@ -10,7 +10,7 @@ class EvoluttyManager {
     for (const route of this.routes) {
       new route.routeType(route.queueName, route.handler);
     }
-    logging.info("Evolutty started");
+    logging.info('Evolutty started');
   }
 }
 

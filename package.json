@@ -1,32 +1,38 @@
 {
   "name": "evolutty",
   "version": "0.1.1",
-  "description": "",
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/esm/index.js",
-  "types": "./dist/esm/index.d.ts",
-  "source": "./src/index.ts",
+  "description": "A simple queue manager for BullMQ",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
-    "run": "ts-node ./src/index.ts",
+    "build": "npm run clean && tsc",
+    "watch": "tsc --watch",
+    "clean": "rm -fr dist/*",
+    "prepublishOnly": "npm run build",
+    "pretest": "npm run build",
     "test": "jest",
     "dc:up": "docker-compose -f docker-compose.yml up -d",
     "dc:down": "docker-compose -f docker-compose.yml down",
-    "eslint:fix": "./node_modules/.bin/eslint . --ignore-path ./.eslintignore --fix",
-    "lint": "./node_modules/.bin/eslint . --ignore-path ./.eslintignore",
-    "tsc": "tsc",
-    "tsc:all": "tsc && tsc -p tsconfig-cjs.json",
-    "ci": "npm run lint && npm run tsc:all && npm run test",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --loglevel warn --write \"**/*.{js,json,jsx,md,ts,tsx,html}\"",
+    "format:check": "prettier --check \"**/*.{js,json,jsx,md,ts,tsx,html}\"",
+    "posttest": "npm run lint && npm run format:check",
     "generate-docs": "typedoc"
   },
-  "keywords": [],
+  "keywords": [
+    "bullmq",
+    "bull",
+    "queue",
+    "redis",
+    "typescript"
+  ],
   "author": "Paulo Tinoco <paulovictortinoco@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@sentry/node": "^7.29.0",
-    "@sentry/tracing": "^7.29.0",
     "bullmq": "^3.5.2",
     "dotenv": "^16.0.3",
     "winston": "^3.8.2"
@@ -37,6 +43,7 @@
     "@types/node": "^18.11.18",
     "@typescript-eslint/eslint-plugin": "^5.48.1",
     "eslint": "^8.31.0",
+    "eslint-config-iplayer-ts": "^4.1.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-prettier": "^4.2.1",
     "ioredis-mock": "^8.2.2",
@@ -47,5 +54,39 @@
     "ts-node": "^10.9.1",
     "typedoc": "^0.23.24",
     "typescript": "^4.9.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/paulo-tinoco/evolutty.git"
+  },
+  "bugs": {
+    "url": "https://github.com/paulo-tinoco/evolutty/issues"
+  },
+  "homepage": "https://github.com/paulo-tinoco/evolutty",
+  "publishConfig": {
+    "access": "public"
+  },
+  "eslintConfig": {
+    "extends": [
+      "iplayer-ts",
+      "prettier"
+    ],
+    "parserOptions": {
+      "sourceType": "module"
+    },
+    "rules": {
+      "@typescript-eslint/naming-convention": [
+        "error",
+        {
+          "selector": "variable",
+          "format": [
+            "camelCase",
+            "UPPER_CASE",
+            "PascalCase"
+          ],
+          "leadingUnderscore": "allow"
+        }
+      ]
+    }
   }
 }

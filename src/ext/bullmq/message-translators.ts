@@ -1,8 +1,8 @@
-import { AbstractMessageTranslator } from "../../message-translators";
-import { Job } from "bullmq";
+import { AbstractMessageTranslator } from '../../message-translators';
+import { Job } from 'bullmq';
 
 export class BullMQMessageTranslator extends AbstractMessageTranslator {
-  translate(job: Job, token: string): {content: object, metadata: object} {
+  translate(job: Job, token: string): { content: object; metadata: object } {
     return {
       content: job.data,
       metadata: {
@@ -10,10 +10,9 @@ export class BullMQMessageTranslator extends AbstractMessageTranslator {
         name: job.name,
         timestamp: job.timestamp,
         opts: job.opts,
-        job: job,
-        token: token
+        job,
+        token
       }
     };
   }
 }
-

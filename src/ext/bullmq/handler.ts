@@ -1,9 +1,13 @@
-import { Worker, Job } from "bullmq";
-import { BullMQMessageTranslator } from "./message-translators";
-
+import { Worker, Job } from 'bullmq';
+import { BullMQMessageTranslator } from './message-translators';
 
 class BullMQHandler extends Worker {
-  constructor(queueName: string, processor?: any, options?: any, Connection?: any) {
+  constructor(
+    queueName: string,
+    processor?: any,
+    options?: any,
+    Connection?: any
+  ) {
     super(queueName, processor, options, Connection);
   }
 
@@ -12,9 +16,10 @@ class BullMQHandler extends Worker {
     const { content, metadata } = translator.translate(job, token);
     return this.handle(content, metadata);
   }
-  
-  async handle(content: object, metadata?: object) : Promise<boolean> {
-    throw new Error("Not implemented");
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async handle(content: object, _metadata?: object): Promise<boolean> {
+    throw new Error('Not implemented');
   }
 }
 
