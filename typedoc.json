@@ -4,7 +4,7 @@
   "treatWarningsAsErrors": false,
   "searchInComments": true,
   "entryPoints": ["./src/index.ts"],
-  "out": "public",
+  "out": "docs",
   "name": "Evolutty",
   "hideGenerator": true,
   "navigationLinks": {

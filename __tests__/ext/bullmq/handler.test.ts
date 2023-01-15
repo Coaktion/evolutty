@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
 import { BullMQHandler } from '../../../src/ext/bullmq/handler';
+import { TranslateBullMQ } from '../../../src/ext/bullmq/types';
 import { ConnectionOptions, Job, Worker } from 'bullmq';
 import { redisMock } from 'ioredis-mock';
 
@@ -12,6 +13,18 @@ const job: Job = {
   moveToFailed: async (_error, _token) => {}
 } as Job;
 
+const { content, metadata } = {
+  content: {
+    text: 'Hello',
+    from: 'en',
+    to: 'es'
+  },
+  metadata: {
+    id: '1234',
+    name: 'test'
+  }
+} as TranslateBullMQ;
+
 describe('BullMQHandler', () => {
   it('should construct a handler object', () => {
     jest.spyOn(Worker.prototype, 'on');
@@ -22,7 +35,7 @@ describe('BullMQHandler', () => {
 
   it('should throw an error when calling handle', async () => {
     const handler = new BullMQHandler('test', () => {}, { connection });
-    await expect(handler.handle({}, {})).rejects.toThrowError(
+    await expect(handler.handle({ content, metadata })).rejects.toThrowError(
       'Not implemented'
     );
     handler.close();

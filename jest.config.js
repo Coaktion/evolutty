@@ -14,6 +14,7 @@ module.exports = {
   coverageReporters: ['json', 'lcov', 'text', 'clover'],
   coverageDirectory: 'coverage',
   coveragePathIgnorePatterns: [
+    'types.ts',
     '/node_modules/',
     '/dist/',
     '/src/index.ts',

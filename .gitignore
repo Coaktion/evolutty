@@ -128,3 +128,6 @@ dist
 .history/
 
 # End of https://mrkandreev.name/snippets/gitignore-generator/#Node,VisualStudioCode
+
+# Docs folder
+docs
