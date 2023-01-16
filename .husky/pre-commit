@@ -2,3 +2,40 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 npm run pre-commit
+
+# Protect main from accidental commits.
+echo "===\n>> Pre-commit Hook:: Checking branch name..."
+branchName=$(git branch | grep '*' | sed 's/* //')
+
+if [ $branchName == 'main' ]
+then
+  echo "\n🚫 Commit directly to main branch is not allowed!\n" && exit 1
+else
+  echo "\n✅ Branch name is $branchName not main.\n"
+fi
+
+
+if [ $branchName == 'develop' ]
+then
+  echo "\n🚫 Cannot push to remote develop branch, please create your own branch and use PR." && exit 1
+else
+  echo "\n✅ Branch name is $branchName not develop.\n"
+fi
+
+if [[ $branchName = *[![:ascii:]]* ]]
+then
+  echo "\n🚫 Branch name should not have any ascii and upper case letters, please rename your branch name.\n" && exit 1
+else
+  echo "\n✅ Branch name is $branchName not contain ascii.\n"
+fi
+
+if [[ $branchName =~ [A-Z] ]]
+then
+  echo "\n🚫 Branch name should not have any ascii and upper case letters, please rename your branch name.\n" && exit 1
+else
+  echo "\n✅ Branch name is $branchName not contain upper case letters.\n"
+fi
+
+echo ">> Finish checking branch name / Selesai mengecek nama branch.\n==="
+
+exit 0
