@@ -2,7 +2,6 @@
 import EvoluttyManager from '../src/managers';
 
 class MockRouter {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   constructor(_queueName: string, _handler: any) {}
 }
 

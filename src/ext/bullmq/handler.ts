@@ -43,8 +43,10 @@ class BullMQHandler extends Worker {
    *  return true;
    * }
    */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async handle({ content, metadata }: TranslateBullMQ): Promise<boolean> {
+  async handle(
+    _content: TranslateBullMQ['content'],
+    _metadata?: TranslateBullMQ['metadata']
+  ): Promise<boolean> {
     throw new Error('Not implemented');
   }
 }

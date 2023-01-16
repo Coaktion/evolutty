@@ -1,10 +1,8 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import Router from '../src/routes';
 
 const provider = {
   stop: () => {}
 };
-// eslint-disable-next-line func-style
 const handler = () => {};
 const messageTranslator = {
   translate: (content: any) => {

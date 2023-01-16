@@ -2,7 +2,6 @@ import { Job } from 'bullmq';
 
 import { BullMQMessageTranslator } from '../../../src/ext/bullmq/message-translators';
 
-// eslint-disable-next-line @typescript-eslint/consistent-type-assertions
 const job: Job = {
   data: { test: 'test' },
   id: '1',

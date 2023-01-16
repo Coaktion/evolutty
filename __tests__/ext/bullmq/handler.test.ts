@@ -1,11 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
 import { ConnectionOptions, Job, Worker } from 'bullmq';
 import { redisMock } from 'ioredis-mock';
 
 import { BullMQHandler } from '../../../src/ext/bullmq/handler';
 import { TranslateBullMQ } from '../../../src/ext/bullmq/types';
+
+const funcEmpty = () => {};
 
 const connection = {
   createClient: () => new redisMock()
@@ -30,13 +29,13 @@ const { content, metadata } = {
 describe('BullMQHandler', () => {
   it('should construct a handler object', () => {
     jest.spyOn(Worker.prototype, 'on');
-    const handler = new BullMQHandler('test', () => {}, { connection });
+    const handler = new BullMQHandler('test', funcEmpty, { connection });
     expect(handler).toBeInstanceOf(Worker);
     handler.close();
   });
 
   it('should throw an error when calling handle', async () => {
-    const handler = new BullMQHandler('test', () => {}, { connection });
+    const handler = new BullMQHandler('test', funcEmpty, { connection });
     await expect(handler.handle({ content, metadata })).rejects.toThrowError(
       'Not implemented'
     );
@@ -44,7 +43,7 @@ describe('BullMQHandler', () => {
   });
 
   it('should call handle when calling processJob', async () => {
-    const handler = new BullMQHandler('test', () => {}, { connection });
+    const handler = new BullMQHandler('test', funcEmpty, { connection });
     const handleSpy = jest.spyOn(handler, 'handle');
     await handler.processJob(job, 'token');
     expect(handleSpy).toHaveBeenCalled();

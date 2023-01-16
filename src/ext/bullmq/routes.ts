@@ -1,8 +1,6 @@
 import config from '../../config';
 
 class BullMQRouter {
-  /* istanbul ignore next */
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   protected functionFake: any = () => {};
   queueName: string;
   handler: any;
