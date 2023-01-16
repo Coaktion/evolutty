@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# Protect master from accidental commits.
+# Protect main from accidental commits.
 echo -e "===\n>> Talenavi Pre-commit Hook:: Checking branch name / Mengecek nama branch..."
 branchName=$(git branch | grep '*' | sed 's/* //')
 
-if [ $branchName == 'master' ]
+if [ $branchName == 'main' ]
 then
-  echo -e "\n🚫 Commit directly to master branch is not allowed! / Commit langsung ke branch master dilarang!\n" && exit 1
+  echo -e "\n🚫 Commit directly to main branch is not allowed! / Commit langsung ke branch main dilarang!\n" && exit 1
 fi
 
 if [ $branchName == 'develop' ]
