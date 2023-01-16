@@ -23,7 +23,7 @@
     "format:check": "prettier --check \"**/*.{js,json,jsx,md,ts,tsx,html}\"",
     "posttest": "npm run lint && npm run format:check",
     "generate-docs": "typedoc",
-    "pre-commit": "npx pretty-quick --staged && npm run test && ./commands/pre-commit"
+    "pre-commit": "npx pretty-quick --staged && npm run test"
   },
   "keywords": [
     "bullmq",
