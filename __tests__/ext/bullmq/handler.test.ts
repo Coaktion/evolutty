@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
-import { BullMQHandler } from '../../../src/ext/bullmq/handler';
-import { TranslateBullMQ } from '../../../src/ext/bullmq/types';
 import { ConnectionOptions, Job, Worker } from 'bullmq';
 import { redisMock } from 'ioredis-mock';
+
+import { BullMQHandler } from '../../../src/ext/bullmq/handler';
+import { TranslateBullMQ } from '../../../src/ext/bullmq/types';
 
 const connection = {
   createClient: () => new redisMock()

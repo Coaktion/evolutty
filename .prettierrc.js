@@ -1,5 +1,8 @@
 module.exports = {
   singleQuote: true,
   arrowParens: 'always',
-  trailingComma: 'none'
+  trailingComma: 'none',
+  importOrder: ['^@core/(.*)$', '^@server/(.*)$', '^@ui/(.*)$', '^[./]'],
+  importOrderSeparation: true,
+  importOrderSortSpecifiers: true
 };

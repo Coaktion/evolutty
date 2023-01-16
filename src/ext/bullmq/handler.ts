@@ -1,4 +1,5 @@
-import { Worker, Job } from 'bullmq';
+import { Job, Worker } from 'bullmq';
+
 import { BullMQMessageTranslator } from './message-translators';
 import { TranslateBullMQ } from './types';
 

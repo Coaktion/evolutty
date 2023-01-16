@@ -1,4 +1,5 @@
 import { Job } from 'bullmq';
+
 import { AbstractMessageTranslator } from '../../message-translators';
 import { TranslateBullMQ } from './types';
 
