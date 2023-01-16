@@ -131,3 +131,5 @@ dist
 
 # Docs folder
 docs
+
+.husky/
