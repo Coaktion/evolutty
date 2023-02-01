@@ -1,6 +1,6 @@
 name: 'Bug report'
-title: "[Bug]: "
-labels: ["bug", "triage"]
+title: '[Bug]: '
+labels: ['bug', 'triage']
 description: Report a reproducible bug or regression
 body:
   - type: markdown
@@ -100,14 +100,6 @@ body:
         e.g. v6.0.0
     validations:
       required: true
-  - type: input
-    id: ts-version
-    attributes:
-      label: AWS SDK version
-      description: |
-        Please include what version of the AWS SDK you are using
-      placeholder: |
-        e.g. v3.226.0
   - type: textarea
     id: additional
     attributes:

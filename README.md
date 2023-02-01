@@ -17,3 +17,44 @@
 ---
 
 :information_source: Currently, only BullMQ is supported
+
+## Installation
+
+```bash
+npm install evolutty
+```
+
+## Usage
+
+```typescript
+import { BullMQRouter, EvoluttyManager } from 'evolutty';
+
+export class MyHandler extends BullMQHandler {
+  async handle(content: object, metadata: object): Promise<boolean> {
+    return true;
+  }
+}
+
+const routers = [
+  {
+    routeType: BullMQRouter,
+    handler: MyHandler,
+    queueName: 'myQueue'
+  }
+];
+
+const manager = new EvoluttyManager(routers);
+manager.start();
+```
+
+## License
+
+**Evolutty** is [MIT](./LICENSE)
+
+## Contributing
+
+Please read [CONTRIBUTING.md](.github/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
+
+## Authors
+
+- **Paulo Tinoco** - _Initial work_ - [paulo-tinoco](https://github.com/paulo-tinoco)
