@@ -1,13 +1,12 @@
 import { ConnectionOptions, Job, Worker } from 'bullmq';
-import { redisMock } from 'ioredis-mock';
+import Redis from 'ioredis-mock';
 
-import { BullMQHandler } from '../../../src/ext/bullmq/handler';
-import { TranslateBullMQ } from '../../../src/ext/bullmq/types';
+import { BullMQHandler, TranslateBullMQ } from '../../../src';
 
 const funcEmpty = () => {};
 
 const connection = {
-  createClient: () => new redisMock()
+  createClient: () => new Redis()
 } as ConnectionOptions;
 
 const job: Job = {
@@ -27,26 +26,31 @@ const { content, metadata } = {
 } as TranslateBullMQ;
 
 describe('BullMQHandler', () => {
-  it('should construct a handler object', () => {
-    jest.spyOn(Worker.prototype, 'on');
-    const handler = new BullMQHandler('test', funcEmpty, { connection });
-    expect(handler).toBeInstanceOf(Worker);
+  let handler: BullMQHandler;
+  beforeEach(() => {
+    jest.useFakeTimers();
+    handler = new BullMQHandler('test', funcEmpty, { connection });
+    jest.clearAllMocks();
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
     handler.close();
+  });
+
+  it('should construct a handler object', () => {
+    expect(handler).toBeInstanceOf(Worker);
   });
 
   it('should throw an error when calling handle', async () => {
-    const handler = new BullMQHandler('test', funcEmpty, { connection });
     await expect(handler.handle({ content, metadata })).rejects.toThrowError(
       'Not implemented'
     );
-    handler.close();
   });
 
   it('should call handle when calling processJob', async () => {
-    const handler = new BullMQHandler('test', funcEmpty, { connection });
     const handleSpy = jest.spyOn(handler, 'handle');
     await handler.processJob(job, 'token');
     expect(handleSpy).toHaveBeenCalled();
-    handler.close();
   });
 });

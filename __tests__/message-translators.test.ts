@@ -1,7 +1,4 @@
-import {
-  AbstractMessageTranslator,
-  StringMessageTranslator
-} from '../src/message-translators';
+import { AbstractMessageTranslator, StringMessageTranslator } from '../src';
 
 describe('AbstractMessageTranslator', () => {
   it('should throw an error when calling translate', () => {

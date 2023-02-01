@@ -1,4 +1,4 @@
-import AbstractProvider from '../src/providers';
+import { AbstractProvider } from '../src';
 
 describe('AbstractProvider', () => {
   it('should throw an error when calling fetchMessages', () => {

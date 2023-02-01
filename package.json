@@ -62,12 +62,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/paulo-tinoco/evolutty.git"
+    "url": "https://github.com/Coaktion/evolutty.git"
   },
   "bugs": {
-    "url": "https://github.com/paulo-tinoco/evolutty/issues"
+    "url": "https://github.com/Coaktion/evolutty/issues"
   },
-  "homepage": "https://github.com/paulo-tinoco/evolutty",
+  "homepage": "https://github.com/Coaktion/evolutty",
   "publishConfig": {
     "access": "public"
   },
@@ -117,5 +117,52 @@
         }
       ]
     }
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "verbose": true,
+    "testMatch": [
+      "**/*.test.ts"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/dist/"
+    ],
+    "modulePathIgnorePatterns": [
+      "/dist/"
+    ],
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/**/*.ts"
+    ],
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "text",
+      "clover"
+    ],
+    "coverageDirectory": "coverage",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/dist/",
+      "src/index.ts",
+      "config.ts",
+      "types.ts",
+      "logging.ts"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 100,
+        "functions": 100,
+        "lines": 100,
+        "statements": 100
+      }
+    },
+    "detectOpenHandles": true,
+    "forceExit": true
   }
 }
