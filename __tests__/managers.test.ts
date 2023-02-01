@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import EvoluttyManager from '../src/managers';
+import { EvoluttyManager } from '../src';
 
 class MockRouter {
   constructor(_queueName: string, _handler: any) {}

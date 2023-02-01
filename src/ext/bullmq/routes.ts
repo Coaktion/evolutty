@@ -1,6 +1,7 @@
 import config from '../../config';
 
 class BullMQRouter {
+  /* istanbul ignore next */
   protected functionFake: any = () => {};
   queueName: string;
   handler: any;

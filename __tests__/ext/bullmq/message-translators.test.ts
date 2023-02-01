@@ -1,6 +1,6 @@
 import { Job } from 'bullmq';
 
-import { BullMQMessageTranslator } from '../../../src/ext/bullmq/message-translators';
+import { BullMQMessageTranslator } from '../../../src';
 
 const job: Job = {
   data: { test: 'test' },
