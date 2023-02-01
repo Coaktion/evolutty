@@ -161,8 +161,19 @@
         "lines": 100,
         "statements": 100
       }
-    },
-    "detectOpenHandles": true,
-    "forceExit": true
+    }
+  },
+  "prettier": {
+    "singleQuote": true,
+    "arrowParens": "always",
+    "trailingComma": "none",
+    "importOrder": [
+      "^@core/(.*)$",
+      "^@server/(.*)$",
+      "^@ui/(.*)$",
+      "^[./]"
+    ],
+    "importOrderSeparation": true,
+    "importOrderSortSpecifiers": true
   }
 }
