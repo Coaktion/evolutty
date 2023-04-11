@@ -12,3 +12,8 @@ export {
 export { default as AbstractProvider } from './providers';
 export { default as Router } from './routes';
 export { RoutesType } from './types';
+export { SQSHandler } from './ext/sqs/handlers';
+export { SQSMessageTranslator } from './ext/sqs/message-translators';
+export { SQSProvider } from './ext/sqs/providers';
+export { SQSClientOptions } from './ext/sqs/types';
+export { SQSRouter } from './ext/sqs/routes';

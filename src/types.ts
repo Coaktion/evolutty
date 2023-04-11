@@ -36,4 +36,17 @@ export interface RoutesType {
    * @see BullMQHandler
    */
   handler: any;
+  /**
+   * Route Params
+   * @description params to be passed to the route
+   * @example
+   * const routeParams = {
+   *    abc: '123'
+   * };
+   * @type {object}
+   * @memberof RoutesType
+   * @see BullMQRouter
+   * @see SQSRouter
+   */
+  routeParams?: object;
 }

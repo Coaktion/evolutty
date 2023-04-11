@@ -1,10 +1,9 @@
-import { BullMQHandler } from '../../src/';
+import { SQSHandler } from '../../src/';
 
-class MyHandler extends BullMQHandler {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+export class MyHandler extends SQSHandler {
   async handle(content: object, metadata: object): Promise<boolean> {
+    console.log('content', content);
+    console.log('metadata', metadata);
     return true;
   }
 }
-
-export default MyHandler;

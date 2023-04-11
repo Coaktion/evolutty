@@ -1,11 +1,26 @@
-import BullMQRouter from '../../src/ext/bullmq/routes';
-import MyHandler from './handlers';
+import { SQSRouter } from '../../src';
+import { MyHandler } from './handlers';
+
+const routeParams = {
+  accessKeyId: 'test',
+  secretAccessKey: 'test',
+  endpoint: 'http://localhost:4566',
+  region: 'us-east-1',
+  visibilityTimeout: 10
+};
 
 const routers = [
   {
-    routeType: BullMQRouter,
+    routeType: SQSRouter,
+    routeParams,
     handler: MyHandler,
-    queueName: 'myQueue'
+    queueName: 'local__service_example'
+  },
+  {
+    routeType: SQSRouter,
+    routeParams,
+    handler: MyHandler,
+    queueName: 'local__service_example_02'
   }
 ];
 
