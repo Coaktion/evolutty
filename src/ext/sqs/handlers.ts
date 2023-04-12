@@ -1,5 +1,6 @@
 import { debug } from 'console';
 
+import { timeout } from '../../utils';
 import { BaseSQS } from './base';
 import { SQSMessageTranslator } from './message-translators';
 import { SQSProvider } from './providers';
@@ -9,7 +10,6 @@ export class SQSHandler extends BaseSQS {
   provider: SQSProvider;
   messageTranslator: SQSMessageTranslator;
   started: boolean;
-  pollingTimeoutId: NodeJS.Timeout | undefined = undefined;
   pollingWaitTimeMs: number;
   constructor(queueName: string, clientOptions: SQSClientOptions) {
     super(clientOptions);
@@ -35,50 +35,49 @@ export class SQSHandler extends BaseSQS {
 
     debug('Stopping AWS Queue');
     this.started = false;
+  }
 
-    if (this.pollingTimeoutId) {
-      clearTimeout(this.pollingTimeoutId);
-      this.pollingTimeoutId = undefined;
+  async processMessage(message: any): Promise<void> {
+    const { content, metadata } =
+      this.messageTranslator.translateMessage(message);
+    try {
+      const handled = await this.handle(content, metadata);
+      if (handled) {
+        await this.provider.confirmMessage(message);
+      }
+    } catch (err) {
+      debug('Error handling message', err);
+      if (err.deleteMessage) {
+        await this.provider.confirmMessage(message);
+      } else {
+        await this.provider.messageNotProcessed(message);
+      }
     }
   }
 
-  poll(): void {
+  async poll(): Promise<void> {
     if (!this.started) {
       debug('Poll was called while consumer was stopped, cancelling poll...');
-      return;
+      return void 0;
     }
 
     debug('Polling for messages');
-    this.provider.fetchMessages().then((messages: any[]) => {
-      if (messages) {
-        debug(`Received ${messages.length} messages`);
-        messages.forEach((message: any) => {
-          const { content, metadata } =
-            this.messageTranslator.translateMessage(message);
-          this.handle(content, metadata)
-            .then((handled: boolean) => {
-              if (handled) {
-                this.provider.confirmMessage(message);
-              }
-            })
-            .catch((err: any) => {
-              debug('Error handling message', err);
-              if (err.deleteMessage) {
-                this.provider.confirmMessage(message);
-              } else {
-                this.provider.messageNotProcessed(message);
-              }
-            });
-        });
-      }
+    const messages = await this.provider.fetchMessages();
+    if (messages) {
+      debug(
+        `Received ${messages.length} messages from queue ${this.provider.queueName}`
+      );
+      messages.forEach((message: any) => {
+        this.processMessage(message);
+      });
+    }
 
-      if (this.pollingTimeoutId) {
-        clearTimeout(this.pollingTimeoutId);
-      }
-      this.pollingTimeoutId = setTimeout(() => {
-        this.poll();
-      }, this.pollingWaitTimeMs);
-    });
+    this.callPoll();
+  }
+
+  async callPoll(): Promise<void> {
+    await timeout(this.pollingWaitTimeMs);
+    await this.poll();
   }
 
   async handle(_content: object, _metada: object): Promise<boolean> {

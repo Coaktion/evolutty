@@ -5,7 +5,7 @@ export { default as BullMQRouter } from './ext/bullmq/routes';
 export { MetaDataBullMQ, TranslateBullMQ } from './ext/bullmq/types';
 export { default as logging } from './logging';
 export { default as EvoluttyManager } from './managers';
-export { calculateBackoffMultiplier } from './utils';
+export { calculateBackoffMultiplier, timeout } from './utils';
 export {
   AbstractMessageTranslator,
   StringMessageTranslator

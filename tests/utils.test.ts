@@ -1,4 +1,4 @@
-import { calculateBackoffMultiplier } from '../src';
+import { calculateBackoffMultiplier, timeout } from '../src';
 
 describe('calculateBackoffMultiplier', () => {
   it('should return the correct backoff multiplier', () => {
@@ -15,5 +15,14 @@ describe('calculateBackoffMultiplier', () => {
       const result = calculateBackoffMultiplier(numRetries, backoffFactor);
       expect(result).toEqual(expected);
     });
+  });
+});
+
+describe('timeout', () => {
+  it('should return a promise that resolves after the specified time', async () => {
+    const start = Date.now();
+    await timeout(100);
+    const end = Date.now();
+    expect(end - start).toBeGreaterThanOrEqual(100);
   });
 });
