@@ -34,7 +34,7 @@ export class SQSProvider extends AbstractProvider {
       if (error.response && error.response.status === 404) {
         return Promise.resolve();
       }
-      throw new Error(error);
+      throw error;
     }
   }
 
@@ -64,7 +64,7 @@ export class SQSProvider extends AbstractProvider {
       if (error.name !== 'InvalidParameterValue') {
         return Promise.resolve();
       }
-      throw new Error(error);
+      throw error;
     }
   }
 

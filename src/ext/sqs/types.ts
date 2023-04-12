@@ -26,7 +26,7 @@ export type MedaData = {
   ReceiptHandle: string;
   MD5OfBody: string;
   Attributes: object;
-  MessageAttributes: SQSMessageAttributes;
+  MessageAttributes?: SQSMessageAttributes;
   MD5OfMessageAttributes: string;
   EventSource: string;
   EventSourceARN: string;

@@ -1,8 +1,8 @@
 import { AbstractMessageTranslator } from '../../message-translators';
-import { Message, MessageTranslated } from './types';
+import { MessageTranslated } from './types';
 
 export class SQSMessageTranslator extends AbstractMessageTranslator {
-  translateMessage(message: Message): MessageTranslated {
+  translateMessage(message: any): MessageTranslated {
     const body = JSON.parse(message.Body);
     return {
       content: JSON.parse(body.Message),
