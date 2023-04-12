@@ -1,6 +1,7 @@
 import { SQSClientOptions, SQSHandler, SQSRouter } from '../../../src';
 
 class Handler {
+  start = jest.fn();
   async handle() {
     return true;
   }

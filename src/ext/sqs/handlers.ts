@@ -16,7 +16,6 @@ export class SQSHandler extends BaseSQS {
     this.provider = new SQSProvider(queueName, clientOptions);
     this.messageTranslator = new SQSMessageTranslator();
     this.pollingWaitTimeMs = 1000;
-    this.start();
   }
 
   start(): void {

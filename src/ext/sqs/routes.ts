@@ -13,5 +13,6 @@ export class SQSRouter {
 
     this.queueName = queueName;
     this.handler = new handler(this.queueName, clientOptions);
+    this.handler.start();
   }
 }

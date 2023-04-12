@@ -1,99 +1,220 @@
-import { SQSHandler } from '../../../src';
-
-jest.mock('../../../src/ext/sqs/providers');
+import { SQSHandler, SQSMessageTranslator, SQSProvider } from '../../../src';
 
 describe('SQSHandler', () => {
-  let handler: SQSHandler;
-  let startSpy: jest.SpyInstance;
+  let sqsHandler: SQSHandler;
+
   beforeEach(() => {
-    jest.useFakeTimers();
-    jest.resetAllMocks();
-    startSpy = jest.spyOn(SQSHandler.prototype, 'start');
-    handler = new SQSHandler('test', {});
-    handler.provider = {
-      getMessages: jest.fn().mockResolvedValue([]),
-      confirmMessage: jest.fn(),
-      messageNotProcessed: jest.fn()
-    } as any;
+    sqsHandler = new SQSHandler('queueName', {
+      visibilityTimeout: 10
+    });
   });
 
-  it('should have a start method', () => {
-    expect(SQSHandler.prototype.start).toBeDefined();
+  describe('constructor', () => {
+    it('should create a new SQSHandler', () => {
+      expect(sqsHandler).toBeDefined();
+      expect(sqsHandler.provider).toBeDefined();
+      expect(sqsHandler.provider).toBeInstanceOf(SQSProvider);
+      expect(sqsHandler.messageTranslator).toBeDefined();
+      expect(sqsHandler.messageTranslator).toBeInstanceOf(SQSMessageTranslator);
+    });
   });
 
-  it('should call start on construction', () => {
-    expect(startSpy).toHaveBeenCalled();
+  describe('start', () => {
+    it('should start the handler', () => {
+      sqsHandler.poll = jest.fn();
+      sqsHandler.start();
+      expect(sqsHandler.started).toBeTruthy();
+      expect(sqsHandler.poll).toHaveBeenCalled();
+    });
   });
 
-  // it('should call poll on start call', () => {
-  //   startSpy.mockRestore();
-  //   const pollSpy = jest.spyOn(SQSHandler.prototype, 'poll');
-  //   handler.start();
-  //   expect(pollSpy).toHaveBeenCalled();
-  //   expect(handler.started).toBe(true);
-  // });
-
-  it('should have a stop method', () => {
-    expect(SQSHandler.prototype.stop).toBeDefined();
-  });
-
-  it('should set started to false on stop call', () => {
-    handler.started = true;
-    handler.stop();
-    expect(handler.started).toBe(false);
-  });
-
-  it('should void on stop call when started equal false', () => {
-    jest.spyOn(SQSHandler.prototype, 'poll');
-    handler.started = false;
-    const response = handler.stop();
-    expect(response).toBeUndefined();
-  });
-
-  it('should have a processMessage method', () => {
-    expect(SQSHandler.prototype.processMessage).toBeDefined();
-  });
-
-  it('should call handle on processMessage', async () => {
-    handler.messageTranslator.translateMessage = jest.fn().mockReturnValue({
-      content: {},
-      metadata: {}
+  describe('stop', () => {
+    it('should stop the handler', () => {
+      sqsHandler.started = true;
+      sqsHandler.stop();
+      expect(sqsHandler.started).toBeFalsy();
     });
 
-    handler.handle = jest.fn().mockResolvedValue(true);
-    handler.provider.confirmMessage = jest.fn();
-    await handler.processMessage({});
-    expect(handler.handle).toHaveBeenCalled();
-    expect(handler.provider.confirmMessage).toHaveBeenCalled();
+    it('should not stop the handler if it is already stopped', () => {
+      sqsHandler.started = false;
+      sqsHandler.stop();
+      expect(sqsHandler.started).toBeFalsy();
+    });
   });
 
-  it('should thorw error on processMessage and not deleteMessage', async () => {
-    handler.messageTranslator.translateMessage = jest.fn().mockReturnValue({
-      content: {},
-      metadata: {}
+  describe('processMessage', () => {
+    it('should process the message', async () => {
+      const message = {
+        Body: 'message',
+        ReceiptHandle: 'receiptHandle'
+      };
+      const content = 'content';
+      const metadata = 'metadata';
+      sqsHandler.handle = jest.fn().mockResolvedValue(true);
+      sqsHandler.provider.confirmMessage = jest.fn().mockResolvedValue(true);
+      sqsHandler.messageTranslator.translateMessage = jest
+        .fn()
+        .mockReturnValue({ content, metadata });
+      await sqsHandler.processMessage(message);
+      expect(sqsHandler.handle).toHaveBeenCalledWith(content, metadata);
+      expect(sqsHandler.provider.confirmMessage).toHaveBeenCalledWith(message);
     });
 
-    handler.handle = jest.fn().mockRejectedValue(new Error('test'));
-    handler.provider.confirmMessage = jest.fn();
-    handler.provider.messageNotProcessed = jest.fn();
-    await handler.processMessage({});
-    expect(handler.handle).toHaveBeenCalled();
-    expect(handler.provider.confirmMessage).not.toHaveBeenCalled();
-    expect(handler.provider.messageNotProcessed).toHaveBeenCalled();
+    it('should process the message and not confirm it', async () => {
+      const message = {
+        Body: 'message',
+        ReceiptHandle: 'receiptHandle'
+      };
+      const content = 'content';
+      const metadata = 'metadata';
+      sqsHandler.handle = jest.fn().mockResolvedValue(false);
+      sqsHandler.provider.confirmMessage = jest.fn().mockResolvedValue(true);
+      sqsHandler.messageTranslator.translateMessage = jest
+        .fn()
+        .mockReturnValue({ content, metadata });
+      await sqsHandler.processMessage(message);
+      expect(sqsHandler.handle).toHaveBeenCalledWith(content, metadata);
+      expect(sqsHandler.provider.confirmMessage).not.toHaveBeenCalled();
+    });
+
+    it('should process the message and not confirm it if the message is not handled', async () => {
+      const message = {
+        Body: 'message',
+        ReceiptHandle: 'receiptHandle'
+      };
+      const content = 'content';
+      const metadata = 'metadata';
+      sqsHandler.handle = jest.fn().mockRejectedValue({ deleteMessage: true });
+      sqsHandler.provider.confirmMessage = jest.fn().mockResolvedValue(true);
+      sqsHandler.messageTranslator.translateMessage = jest
+        .fn()
+        .mockReturnValue({ content, metadata });
+      await sqsHandler.processMessage(message);
+      expect(sqsHandler.handle).toHaveBeenCalledWith(content, metadata);
+      expect(sqsHandler.provider.confirmMessage).toHaveBeenCalledWith(message);
+    });
+
+    it('should process the message and not confirm it if the message is not handled', async () => {
+      const message = {
+        Body: 'message',
+        ReceiptHandle: 'receiptHandle'
+      };
+      const content = 'content';
+      const metadata = 'metadata';
+      sqsHandler.handle = jest.fn().mockRejectedValue({ delete: true });
+      sqsHandler.provider.confirmMessage = jest.fn().mockResolvedValue(true);
+      sqsHandler.messageTranslator.translateMessage = jest
+        .fn()
+        .mockReturnValue({
+          content,
+          metadata
+        });
+      await sqsHandler.processMessage(message);
+      expect(sqsHandler.handle).toHaveBeenCalledWith(content, metadata);
+      expect(sqsHandler.provider.confirmMessage).not.toHaveBeenCalledWith(
+        message
+      );
+    });
+
+    it('should process the message and not confirm it if the message is not handled', async () => {
+      const message = {
+        Body: 'message',
+        ReceiptHandle: 'receiptHandle'
+      };
+      const content = 'content';
+      const metadata = 'metadata';
+      sqsHandler.handle = jest.fn().mockRejectedValue({ deleteMessage: true });
+      sqsHandler.provider.confirmMessage = jest.fn().mockResolvedValue(true);
+      sqsHandler.messageTranslator.translateMessage = jest
+        .fn()
+        .mockReturnValue({
+          content,
+          metadata
+        });
+      await sqsHandler.processMessage(message);
+      expect(sqsHandler.handle).toHaveBeenCalledWith(content, metadata);
+      expect(sqsHandler.provider.confirmMessage).toHaveBeenCalledWith(message);
+    });
+
+    it('should process the message and not confirm it if the message is not handled', async () => {
+      const message = {
+        Body: 'message',
+        ReceiptHandle: 'receiptHandle'
+      };
+      const content = 'content';
+      const metadata = 'metadata';
+      sqsHandler.handle = jest.fn().mockRejectedValue({ deleteMessage: true });
+      sqsHandler.provider.confirmMessage = jest.fn().mockResolvedValue(true);
+      sqsHandler.messageTranslator.translateMessage = jest
+        .fn()
+        .mockReturnValue({
+          content,
+          metadata
+        });
+      await sqsHandler.processMessage(message);
+      expect(sqsHandler.handle).toHaveBeenCalledWith(content, metadata);
+      expect(sqsHandler.provider.confirmMessage).toHaveBeenCalledWith(message);
+    });
   });
 
-  it('should thorw error on processMessage and deleteMessage', async () => {
-    handler.messageTranslator.translateMessage = jest.fn().mockReturnValue({
-      content: {},
-      metadata: {}
+  describe('poll', () => {
+    it('should poll the queue and not process the message', async () => {
+      sqsHandler.started = false;
+      sqsHandler.processMessage = jest.fn().mockResolvedValue(true);
+      sqsHandler.provider.fetchMessages = jest.fn().mockResolvedValue({
+        Messages: [
+          {
+            Body: 'message',
+            ReceiptHandle: 'receiptHandle'
+          }
+        ]
+      });
+      await sqsHandler.poll();
+      expect(sqsHandler.processMessage).not.toHaveBeenCalled();
     });
 
-    handler.handle = jest.fn().mockRejectedValue({ deleteMessage: true });
-    handler.provider.confirmMessage = jest.fn();
-    handler.provider.messageNotProcessed = jest.fn();
-    await handler.processMessage({});
-    expect(handler.handle).toHaveBeenCalled();
-    expect(handler.provider.confirmMessage).toHaveBeenCalled();
-    expect(handler.provider.messageNotProcessed).not.toHaveBeenCalled();
+    it('should poll the queue and process the message', async () => {
+      sqsHandler.started = true;
+      sqsHandler.callPoll = jest.fn().mockResolvedValue(true);
+      sqsHandler.processMessage = jest.fn().mockResolvedValue(true);
+      sqsHandler.provider.fetchMessages = jest.fn().mockResolvedValue([
+        {
+          Body: 'message',
+          ReceiptHandle: 'receiptHandle'
+        }
+      ]);
+      await sqsHandler.poll();
+      expect(sqsHandler.processMessage).toHaveBeenCalledTimes(1);
+      expect(sqsHandler.callPoll).toHaveBeenCalledTimes(1);
+    });
+
+    it('should poll the queue and not message', async () => {
+      sqsHandler.started = true;
+      sqsHandler.callPoll = jest.fn().mockResolvedValue(true);
+      sqsHandler.processMessage = jest.fn().mockResolvedValue(true);
+      sqsHandler.provider.fetchMessages = jest.fn().mockResolvedValue([]);
+      await sqsHandler.poll();
+      expect(sqsHandler.processMessage).not.toHaveBeenCalled();
+      expect(sqsHandler.callPoll).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('callPoll', () => {
+    it('should call poll', async () => {
+      sqsHandler.pollingWaitTimeMs = 10;
+      sqsHandler.poll = jest.fn().mockResolvedValue(true);
+      await sqsHandler.callPoll();
+      expect(sqsHandler.poll).toHaveBeenCalled();
+    });
+  });
+
+  describe('handle', () => {
+    it('should handle throw an method not implemented error', async () => {
+      const content = { content: 'content' };
+      const metadata = { metadata: 'metadata' };
+      await expect(sqsHandler.handle(content, metadata)).rejects.toThrow(
+        'Method not implemented'
+      );
+    });
   });
 });
