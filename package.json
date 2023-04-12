@@ -1,6 +1,6 @@
 {
   "name": "@coaktion/evolutty",
-  "version": "0.1.4",
+  "version": "1.0.0",
   "description": "A simple queue manager for BullMQ and AWS SQS",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -25,9 +25,9 @@
     "generate-docs": "typedoc",
     "pre-commit": "npx pretty-quick --staged && npm run test",
     "pre-commit:prepare": "npx husky install",
-    "release:major": "standard-version -- --release-as major && git push --follow-tags",
-    "release:minor": "standard-version -- --release-as minor && git push --follow-tags",
-    "release:patch": "standard-version -- --release-as patch && git push --follow-tags"
+    "release:major": "standard-version -- --release-as major",
+    "release:minor": "standard-version -- --release-as minor",
+    "release:patch": "standard-version -- --release-as patch"
   },
   "keywords": [
     "bullmq",

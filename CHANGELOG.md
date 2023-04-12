@@ -2,12 +2,7 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [0.1.4](https://github.com/Coaktion/evolutty/compare/v0.1.3...v0.1.4) (2023-04-12)
-
-
-### Features
-
-* Adding SQS Provider ([629cacb](https://github.com/Coaktion/evolutty/commit/629cacb92738444a06d042faaa5d6175200f7027))
+### [1.0.0](https://github.com/Coaktion/evolutty/compare/v0.1.4...v0.1.8) (2023-04-12)
 
 ### [0.1.3](https://github.com/Coaktion/evolutty/compare/v0.1.2...v0.1.3) (2023-02-02)
 
