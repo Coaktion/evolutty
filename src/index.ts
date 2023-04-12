@@ -5,6 +5,7 @@ export { default as BullMQRouter } from './ext/bullmq/routes';
 export { MetaDataBullMQ, TranslateBullMQ } from './ext/bullmq/types';
 export { default as logging } from './logging';
 export { default as EvoluttyManager } from './managers';
+export { calculateBackoffMultiplier, timeout } from './utils';
 export {
   AbstractMessageTranslator,
   StringMessageTranslator
@@ -12,3 +13,8 @@ export {
 export { default as AbstractProvider } from './providers';
 export { default as Router } from './routes';
 export { RoutesType } from './types';
+export { SQSHandler } from './ext/sqs/handlers';
+export { SQSMessageTranslator } from './ext/sqs/message-translators';
+export { SQSProvider } from './ext/sqs/providers';
+export { SQSClientOptions } from './ext/sqs/types';
+export { SQSRouter } from './ext/sqs/routes';

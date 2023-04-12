@@ -15,8 +15,8 @@ const routes = [
 
 describe('EvoluttyManager', () => {
   it('start method should call new routeType', () => {
+    const spy = jest.spyOn(EvoluttyManager.prototype, 'start');
     const manager = new EvoluttyManager(routes);
-    const spy = jest.spyOn(manager, 'start');
     manager.start();
     expect(spy).toHaveBeenCalled();
   });

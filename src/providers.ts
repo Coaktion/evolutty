@@ -8,7 +8,7 @@ class AbstractProvider {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async confirmMessage(message: object) {
+  async confirmMessage(message: object): Promise<any> {
     /**
      * Confirm a message as processed.
      * After the message confirmation we should not receive the same message again.
@@ -18,7 +18,7 @@ class AbstractProvider {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async messageNotProcessed(message: object) {
+  async messageNotProcessed(message: object): Promise<any> {
     /**
      * Perform actions when a message was not processed.
      */

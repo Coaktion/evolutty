@@ -13,10 +13,11 @@
 - Easy to create one or multiple services
 - Generic Handlers
 - Bull integration
+- AWS SQS integration
 
 ---
 
-:information_source: Currently, only BullMQ is supported
+:information_source: Currently, BullMQ and AWS SQS is supported
 
 ## Installation
 

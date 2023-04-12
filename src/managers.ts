@@ -31,7 +31,7 @@ class EvoluttyManager {
    */
   start() {
     for (const route of this.routes) {
-      new route.routeType(route.queueName, route.handler);
+      new route.routeType(route.queueName, route.handler, route.routeParams);
     }
     logging.info('Evolutty started');
   }

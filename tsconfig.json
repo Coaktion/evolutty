@@ -3,7 +3,7 @@
     "target": "es2017",
     "module": "commonjs",
     "outDir": "dist",
-    "sourceMap": false,
+    "sourceMap": true,
     "moduleResolution": "node",
     "allowJs": false,
     "noUnusedLocals": true,

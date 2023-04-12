@@ -1,7 +1,7 @@
 {
-  "name": "evolutty",
+  "name": "@coaktion/evolutty",
   "version": "0.1.3",
-  "description": "A simple queue manager for BullMQ",
+  "description": "A simple queue manager for BullMQ and AWS SQS",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -35,6 +35,7 @@
   "author": "Paulo Tinoco <paulovictortinoco@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@aws-sdk/client-sqs": "^3.267.0",
     "bullmq": "^3.5.2",
     "dotenv": "^16.0.3",
     "winston": "^3.8.2"
@@ -45,6 +46,7 @@
     "@types/jest": "^29.2.5",
     "@types/node": "^18.11.18",
     "@typescript-eslint/eslint-plugin": "^5.48.1",
+    "aws-sdk-mock": "^5.8.0",
     "eslint": "^8.31.0",
     "eslint-config-iplayer-ts": "^4.1.0",
     "eslint-config-prettier": "^8.6.0",
@@ -56,7 +58,7 @@
     "prettier": "^2.8.2",
     "pretty-quick": "^3.1.3",
     "standard-version": "^9.5.0",
-    "ts-jest": "^29.0.3",
+    "ts-jest": "^29.1.0",
     "ts-node": "^10.9.1",
     "typedoc": "^0.23.24",
     "typescript": "^4.9.4"
