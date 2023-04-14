@@ -22,16 +22,30 @@
 ## Installation
 
 ```bash
-npm install evolutty
+npm i @coaktion/evolutty
 ```
 
 ## Usage
 
 ```typescript
-import { BullMQRouter, EvoluttyManager } from 'evolutty';
+import {
+  BullMQHandler,
+  BullMQRouter,
+  EvoluttyManager,
+  SQSHandler,
+  SQSRouter
+} from '@coaktion/evolutty';
 
-export class MyHandler extends BullMQHandler {
+export class MyBullHandler extends BullMQHandler {
   async handle(content: object, metadata: object): Promise<boolean> {
+    // code here
+    return true;
+  }
+}
+
+export class MySQSHandler extends SQSHandler {
+  async handle(content: object, metadata: object): Promise<boolean> {
+    // code here
     return true;
   }
 }
@@ -39,8 +53,19 @@ export class MyHandler extends BullMQHandler {
 const routers = [
   {
     routeType: BullMQRouter,
-    handler: MyHandler,
-    queueName: 'myQueue'
+    handler: MyBullHandler,
+    queueName: 'my_queue_bull'
+  },
+  {
+    routeType: SQSRouter,
+    handler: MySQSHandler,
+    routeParams: {
+      accessKeyId: 'test',
+      secretAccessKey: 'test',
+      region: 'us-east-1',
+      visibilityTimeout: 10
+    },
+    queueName: 'my_queue_sqs'
   }
 ];
 
