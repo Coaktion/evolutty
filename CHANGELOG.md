@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.1](https://github.com/Coaktion/evolutty/compare/v1.0.0...v1.0.1) (2023-04-14)
+
 ### [1.0.0](https://github.com/Coaktion/evolutty/compare/v0.1.4...v0.1.8) (2023-04-12)
 
 ### [0.1.3](https://github.com/Coaktion/evolutty/compare/v0.1.2...v0.1.3) (2023-02-02)
