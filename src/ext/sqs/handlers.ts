@@ -1,5 +1,4 @@
-import { debug } from 'console';
-
+import logging from '../../logging';
 import { timeout } from '../../utils';
 import { BaseSQS } from './base';
 import { SQSMessageTranslator } from './message-translators';
@@ -15,12 +14,12 @@ export class SQSHandler extends BaseSQS {
     super(clientOptions);
     this.provider = new SQSProvider(queueName, clientOptions);
     this.messageTranslator = new SQSMessageTranslator();
-    this.pollingWaitTimeMs = 1000;
+    this.pollingWaitTimeMs = 30000;
   }
 
   start(): void {
     if (!this.started) {
-      debug('Starting AWS Queue');
+      logging.info(`Starting AWS Queue ${this.provider.queueName}`);
       this.started = true;
       this.poll();
     }
@@ -28,11 +27,11 @@ export class SQSHandler extends BaseSQS {
 
   stop(): void {
     if (!this.started) {
-      debug('Router was already stopped');
+      logging.info(`Stopping AWS Queue ${this.provider.queueName}`);
       return void 0;
     }
 
-    debug('Stopping AWS Queue');
+    logging.info(`Stopping AWS Queue ${this.provider.queueName}`);
     this.started = false;
   }
 
@@ -45,7 +44,7 @@ export class SQSHandler extends BaseSQS {
         await this.provider.confirmMessage(message);
       }
     } catch (err) {
-      debug('Error handling message', err);
+      logging.error(`Error handling message ${err}`);
       if (err.deleteMessage) {
         await this.provider.confirmMessage(message);
       } else {
@@ -56,14 +55,16 @@ export class SQSHandler extends BaseSQS {
 
   async poll(): Promise<void> {
     if (!this.started) {
-      debug('Poll was called while consumer was stopped, cancelling poll...');
+      logging.info(
+        `Poll was called while consumer was stopped, cancelling poll...`
+      );
       return void 0;
     }
 
-    debug('Polling for messages');
+    logging.info(`Polling AWS Queue ${this.provider.queueName}`);
     const messages = await this.provider.fetchMessages();
     if (messages) {
-      debug(
+      logging.info(
         `Received ${messages.length} messages from queue ${this.provider.queueName}`
       );
       messages.forEach((message: any) => {

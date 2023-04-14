@@ -30,6 +30,8 @@
     "release:patch": "standard-version -- --release-as patch"
   },
   "keywords": [
+    "sqs",
+    "aws",
     "bullmq",
     "bull",
     "queue",
@@ -64,6 +66,7 @@
     "standard-version": "^9.5.0",
     "ts-jest": "^29.1.0",
     "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.2.0",
     "typedoc": "^0.23.24",
     "typescript": "^4.9.4"
   },
