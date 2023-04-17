@@ -1,26 +1,40 @@
-import { SQSRouter } from '../../src';
+import { RabbitMQRouter } from '../../src';
 import { MyHandler } from './handlers';
-
-const routeParams = {
-  accessKeyId: 'test',
-  secretAccessKey: 'test',
-  endpoint: 'http://localhost:4566',
-  region: 'us-east-1',
-  visibilityTimeout: 10
-};
 
 const routers = [
   {
-    routeType: SQSRouter,
-    routeParams,
+    routeType: RabbitMQRouter,
+    routeParams: {
+      username: 'guest',
+      password: 'guest',
+      host: 'localhost',
+      port: 5672,
+      vhost: '/',
+      heartbeat: 10,
+      protocol: 'amqp',
+      locale: 'en_US',
+      frameMax: 0,
+      channelMax: 0,
+      connectionTimeout: 10000,
+      authMechanism: 'AMQPLAIN',
+      ssl: {
+        enabled: false,
+        key: '',
+        cert: '',
+        ca: '',
+        passphrase: ''
+      },
+      retry: {
+        enabled: false,
+        maxRetries: 10,
+        minTimeout: 1000,
+        maxTimeout: 10000,
+        randomize: true
+      },
+      debug: true
+    },
     handler: MyHandler,
     queueName: 'local__service_example'
-  },
-  {
-    routeType: SQSRouter,
-    routeParams,
-    handler: MyHandler,
-    queueName: 'local__service_example_02'
   }
 ];
 
