@@ -18,7 +18,7 @@ export class RabbitMQHandler {
     await this.poll();
   }
 
-  async processMessage(message: Message): Promise<void> {
+  processMessage = async (message: Message): Promise<void> => {
     const { content, metadata } = this.messageTranslator.translateMessage(
       message,
       'json'
@@ -31,7 +31,7 @@ export class RabbitMQHandler {
     } catch (err) {
       await this.provider.messageNotProcessed(message);
     }
-  }
+  };
 
   async poll() {
     const channel = await this.client.connect();
@@ -39,10 +39,7 @@ export class RabbitMQHandler {
       durable: true
     });
 
-    await channel.consume(
-      this.client.queueName,
-      this.processMessage.bind(this)
-    );
+    await channel.consume(this.client.queueName, this.processMessage);
   }
 
   async handle(_content: object, _metadata: object): Promise<boolean> {
