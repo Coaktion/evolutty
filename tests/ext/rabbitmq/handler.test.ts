@@ -115,6 +115,23 @@ describe('RabbitMQHandler', () => {
       expect(confirmMessageSpy).not.toHaveBeenCalled();
       expect(messageNotProcessedSpy).toHaveBeenCalledWith(message);
     });
+
+    it('should confirm message when not handled and deleteMessage property is true', async () => {
+      handler.handle = jest.fn().mockRejectedValue({ deleteMessage: true });
+
+      await handler.processMessage(message);
+
+      expect(handler.handle).toHaveBeenCalledWith(
+        { test: 'test' },
+        {
+          token: 'json',
+          fields: {},
+          properties: {}
+        }
+      );
+      expect(messageNotProcessedSpy).not.toHaveBeenCalled();
+      expect(confirmMessageSpy).toHaveBeenCalledWith(message);
+    });
   });
 
   it('should to call poll method', async () => {

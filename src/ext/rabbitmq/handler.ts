@@ -29,6 +29,10 @@ export class RabbitMQHandler {
         await this.provider.confirmMessage(message);
       }
     } catch (err) {
+      if (err.deleteMessage) {
+        await this.provider.confirmMessage(message);
+        return;
+      }
       await this.provider.messageNotProcessed(message);
     }
   };
