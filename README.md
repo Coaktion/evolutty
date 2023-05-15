@@ -14,10 +14,11 @@
 - Generic Handlers
 - Bull integration
 - AWS SQS integration
+- RabbitMQ integration
 
 ---
 
-:information_source: Currently, BullMQ and AWS SQS is supported
+:information_source: Currently, BullMQ, RabbitMQ and AWS SQS are supported
 
 ## Installation
 
@@ -33,7 +34,9 @@ import {
   BullMQRouter,
   EvoluttyManager,
   SQSHandler,
-  SQSRouter
+  SQSRouter,
+  RabbitMQHandler,
+  RabbitMQRouter
 } from '@coaktion/evolutty';
 
 export class MyBullHandler extends BullMQHandler {
@@ -44,6 +47,13 @@ export class MyBullHandler extends BullMQHandler {
 }
 
 export class MySQSHandler extends SQSHandler {
+  async handle(content: object, metadata: object): Promise<boolean> {
+    // code here
+    return true;
+  }
+}
+
+export class MyRabbitMQHandler extends RabbitMQHandler {
   async handle(content: object, metadata: object): Promise<boolean> {
     // code here
     return true;
@@ -66,6 +76,16 @@ const routers = [
       visibilityTimeout: 10
     },
     queueName: 'my_queue_sqs'
+  },
+  {
+    routeType: RabbitMQRouter,
+    handler: MyRabbitMQHandler,
+    queueName: 'my_queue_rabbitmq',
+    routeParams: {
+      username: 'rabbit_user',
+      password: '*******',
+      debug: true,
+    }
   }
 ];
 
