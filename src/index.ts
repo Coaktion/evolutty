@@ -23,3 +23,4 @@ export { RabbitMQMessageTranslator } from './ext/rabbitmq/message-translators';
 export { RabbitMQProvider } from './ext/rabbitmq/provider';
 export { RabbitMQClientOptions, TranslateRabbitMQ } from './ext/rabbitmq/types';
 export { RabbitMQRouter } from './ext/rabbitmq/routes';
+export { DeleteMessage } from './exceptions';
