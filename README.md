@@ -33,10 +33,10 @@ import {
   BullMQHandler,
   BullMQRouter,
   EvoluttyManager,
-  SQSHandler,
-  SQSRouter,
   RabbitMQHandler,
-  RabbitMQRouter
+  RabbitMQRouter,
+  SQSHandler,
+  SQSRouter
 } from '@coaktion/evolutty';
 
 export class MyBullHandler extends BullMQHandler {
@@ -84,7 +84,7 @@ const routers = [
     routeParams: {
       username: 'rabbit_user',
       password: '*******',
-      debug: true,
+      debug: true
     }
   }
 ];
