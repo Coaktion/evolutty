@@ -21,7 +21,7 @@ export type SQSMessageAttributes = {
   };
 };
 
-export type MedaData = {
+export type MetaData = {
   MessageId: string;
   ReceiptHandle: string;
   MD5OfBody: string;
@@ -33,13 +33,13 @@ export type MedaData = {
   AwsRegion: string;
 };
 
-export type Message = MedaData & {
+export type Message = MetaData & {
   Body: string;
 };
 
 export type MessageTranslated = {
   content: object;
-  metadata: MedaData;
+  metadata: MetaData;
 };
 
 export type ProviderOptions = {
