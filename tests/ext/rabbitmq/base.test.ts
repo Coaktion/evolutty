@@ -1,7 +1,6 @@
+import { BaseClient } from '@/ext/rabbitmq/base';
+import { RabbitMQClientOptions } from '@/index';
 import * as amqplib from 'amqplib';
-
-import { RabbitMQClientOptions } from '../../../src';
-import { BaseClient } from '../../../src/ext/rabbitmq/base';
 
 jest.mock('amqplib');
 

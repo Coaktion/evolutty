@@ -1,4 +1,4 @@
-import { RabbitMQRouter } from '../../../src';
+import { RabbitMQRouter } from '@/index';
 
 class Handler {
   start = jest.fn();

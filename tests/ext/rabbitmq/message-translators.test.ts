@@ -1,6 +1,5 @@
+import { RabbitMQMessageTranslator } from '@/index';
 import { Message } from 'amqplib';
-
-import { RabbitMQMessageTranslator } from '../../../src';
 
 describe('RabbitMQMessageTranslator', () => {
   const translator = new RabbitMQMessageTranslator();
