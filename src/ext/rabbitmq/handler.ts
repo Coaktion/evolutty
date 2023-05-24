@@ -1,4 +1,4 @@
-import { Message } from 'amqplib';
+import { Channel, Message } from 'amqplib';
 
 import { BaseClient } from './base';
 import { RabbitMQMessageTranslator } from './message-translators';
@@ -8,6 +8,7 @@ export class RabbitMQHandler {
   provider: RabbitMQProvider;
   client: BaseClient;
   messageTranslator: RabbitMQMessageTranslator;
+  channel: Channel;
   constructor(provider: RabbitMQProvider) {
     this.provider = provider;
     this.client = new BaseClient(provider.queueName, provider.clientOptions);
@@ -26,24 +27,22 @@ export class RabbitMQHandler {
     try {
       const handled = await this.handle(content, metadata);
       if (handled) {
-        await this.provider.confirmMessage(message);
+        await this.provider.confirmMessage(message, this.channel);
       }
     } catch (err) {
       if (err.deleteMessage) {
-        await this.provider.confirmMessage(message);
+        await this.provider.confirmMessage(message, this.channel);
         return;
       }
-      await this.provider.messageNotProcessed(message);
+      this.channel.nack(message);
+      await this.channel.close();
     }
   };
 
   async poll() {
-    const channel = await this.client.connect();
-    await channel.assertQueue(this.client.queueName, {
-      durable: true
-    });
+    this.channel = await this.provider.connect();
 
-    await channel.consume(this.client.queueName, this.processMessage);
+    await this.channel.consume(this.provider.queueName, this.processMessage);
   }
 
   async handle(_content: object, _metadata: object): Promise<boolean> {

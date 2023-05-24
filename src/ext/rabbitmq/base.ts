@@ -14,6 +14,9 @@ export class BaseClient {
   async connect(): Promise<Channel> {
     const connection = await connect(this.clientOptions);
     const channel = await connection.createChannel();
+    await channel.assertQueue(this.queueName, {
+      durable: true
+    });
     return channel;
   }
 
