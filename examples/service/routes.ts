@@ -5,8 +5,8 @@ const routers = [
   {
     routeType: RabbitMQRouter,
     routeParams: {
-      username: 'guest',
-      password: 'guest',
+      username: 'user',
+      password: 'password',
       host: 'localhost',
       port: 5672,
       vhost: '/',
@@ -14,24 +14,7 @@ const routers = [
       protocol: 'amqp',
       locale: 'en_US',
       frameMax: 0,
-      channelMax: 0,
-      connectionTimeout: 10000,
-      authMechanism: 'AMQPLAIN',
-      ssl: {
-        enabled: false,
-        key: '',
-        cert: '',
-        ca: '',
-        passphrase: ''
-      },
-      retry: {
-        enabled: false,
-        maxRetries: 10,
-        minTimeout: 1000,
-        maxTimeout: 10000,
-        randomize: true
-      },
-      debug: true
+      channelMax: 0
     },
     handler: MyHandler,
     queueName: 'local__service_example'
