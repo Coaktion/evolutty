@@ -1,19 +1,12 @@
-import {
-  RabbitMQClientOptions,
-  RabbitMQHandler,
-  RabbitMQProvider
-} from '@/index';
+import { RabbitMQClientOptions, RabbitMQHandler } from '@/index';
 import * as amqplib from 'amqplib';
 
 jest.mock('amqplib');
 
 describe('RabbitMQHandler', () => {
   let handler: RabbitMQHandler;
-  const provider = new RabbitMQProvider(
-    'test-queue',
-    {} as RabbitMQClientOptions
-  );
-  const mockAmqplib = amqplib as jest.Mocked<typeof amqplib>;
+
+  const { connect } = amqplib as jest.Mocked<typeof amqplib>;
   let mockChannel: amqplib.Channel;
 
   beforeEach(() => {
@@ -27,11 +20,12 @@ describe('RabbitMQHandler', () => {
       nack: jest.fn()
     } as unknown as amqplib.Channel;
 
-    mockAmqplib.connect.mockResolvedValue({
+    connect.mockResolvedValue({
       createChannel: jest.fn().mockResolvedValue(mockChannel)
     } as unknown as amqplib.Connection);
 
-    handler = new RabbitMQHandler(provider);
+    handler = new RabbitMQHandler({} as RabbitMQClientOptions, 'test-queue');
+    handler.channel = mockChannel;
   });
 
   it('should to throw not implemented error', async () => {
@@ -43,9 +37,7 @@ describe('RabbitMQHandler', () => {
   it('should start to consume the queue', async () => {
     await handler.poll();
 
-    expect(mockAmqplib.connect).toHaveBeenCalledWith(
-      handler.client.clientOptions
-    );
+    expect(connect).toHaveBeenCalledWith(handler.client.clientOptions);
     expect(mockChannel.assertQueue).toHaveBeenCalledWith('test-queue', {
       durable: true
     });
@@ -62,9 +54,6 @@ describe('RabbitMQHandler', () => {
       properties: {}
     } as amqplib.Message;
 
-    const messageNotProcessedSpy = jest.spyOn(provider, 'messageNotProcessed');
-    const confirmMessageSpy = jest.spyOn(provider, 'confirmMessage');
-
     it('should translate the message', async () => {
       const translatorSpy = jest.spyOn(
         handler.messageTranslator,
@@ -79,7 +68,7 @@ describe('RabbitMQHandler', () => {
     it('should confirm the message when handled', async () => {
       handler.handle = jest.fn().mockResolvedValue(true);
 
-      await handler.processMessage(message);
+      const response = await handler.processMessage(message);
 
       expect(handler.handle).toHaveBeenCalledWith(
         { test: 'test' },
@@ -89,17 +78,13 @@ describe('RabbitMQHandler', () => {
           properties: {}
         }
       );
-      expect(messageNotProcessedSpy).not.toHaveBeenCalled();
-      expect(confirmMessageSpy).toHaveBeenCalledWith(message);
+      expect(mockChannel.nack).not.toHaveBeenCalled();
+      expect(mockChannel.ack).toHaveBeenCalledWith(message);
+      expect(response).toBe(void 0);
     });
 
     it('should reject the message when not handled', async () => {
       handler.handle = jest.fn().mockRejectedValue(new Error());
-      const messageNotProcessedSpy = jest.spyOn(
-        provider,
-        'messageNotProcessed'
-      );
-      const confirmMessageSpy = jest.spyOn(provider, 'confirmMessage');
 
       await handler.processMessage(message);
 
@@ -111,8 +96,8 @@ describe('RabbitMQHandler', () => {
           properties: {}
         }
       );
-      expect(confirmMessageSpy).not.toHaveBeenCalled();
-      expect(messageNotProcessedSpy).toHaveBeenCalledWith(message);
+      expect(mockChannel.ack).not.toHaveBeenCalled();
+      expect(mockChannel.nack).toHaveBeenCalledWith(message);
     });
 
     it('should confirm message when not handled and deleteMessage property is true', async () => {
@@ -128,8 +113,8 @@ describe('RabbitMQHandler', () => {
           properties: {}
         }
       );
-      expect(messageNotProcessedSpy).not.toHaveBeenCalled();
-      expect(confirmMessageSpy).toHaveBeenCalledWith(message);
+      expect(mockChannel.ack).toHaveBeenCalled();
+      expect(mockChannel.nack).not.toHaveBeenCalledWith(message);
     });
   });
 

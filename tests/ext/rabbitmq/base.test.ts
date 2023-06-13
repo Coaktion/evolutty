@@ -18,7 +18,8 @@ describe('BaseClient', () => {
   beforeEach(() => {
     client = new BaseClient('test-queue', clienteOptions);
     mockChannel = {
-      close: jest.fn()
+      close: jest.fn(),
+      assertQueue: jest.fn()
     } as unknown as amqplib.Channel;
 
     connect.mockResolvedValue({
@@ -30,6 +31,7 @@ describe('BaseClient', () => {
     const response = await client.connect();
 
     expect(connect).toHaveBeenCalledTimes(1);
+    expect(mockChannel.assertQueue).toHaveBeenCalledTimes(1);
     expect(connect).toHaveBeenCalledWith(clienteOptions);
     expect(response).toEqual(mockChannel);
   });
