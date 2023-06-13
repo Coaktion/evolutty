@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/Coaktion/evolutty/compare/v1.0.1...v1.2.0) (2023-06-13)
+
+
+### Features
+
+* Adding rabbitmq provider ([22d2859](https://github.com/Coaktion/evolutty/commit/22d28593a0941d3beb6672b0d96a8831bd572ebd))
+* delete message condition to rabbitmq handler ([be2a438](https://github.com/Coaktion/evolutty/commit/be2a4382cdd9c2cf297387d118792071465a37fd))
+* exports delete message exception ([a35bd24](https://github.com/Coaktion/evolutty/commit/a35bd2468c1ba8d8953a59d3bd18f9181790b198))
+
+
+### Bug Fixes
+
+* adjusts assert queue logic ([7770969](https://github.com/Coaktion/evolutty/commit/777096980a5d04901d2d0ef02e1655a35f56384e))
+* parse processMessage method to arrow function ([60470be](https://github.com/Coaktion/evolutty/commit/60470be820df5aff611d9d10c7df2c042458d317))
+* rabbitmq implementation without provider ([47d6274](https://github.com/Coaktion/evolutty/commit/47d627448e93f2b9dc6786e9c6d31708f4807979))
+* **rabbitmq:** use less client options ([f657ebe](https://github.com/Coaktion/evolutty/commit/f657ebec20a0c5df60dc8ff5ddfbb40ded416e08))
+* remove rabbitmq provider export ([f269629](https://github.com/Coaktion/evolutty/commit/f269629d122fcbcd4e5a4abcefd1eb44baa5e4e8))
+* semantic error in sqs types ([374d07f](https://github.com/Coaktion/evolutty/commit/374d07f1c32cbd79dc10561076298146fd8bca8d))
+* use absolute imports in rabbitmq tests ([92082b5](https://github.com/Coaktion/evolutty/commit/92082b5724ece8a4fcbb1777fd1b6343027cb391))
+
 ## [1.1.0](https://github.com/Coaktion/evolutty/compare/v1.0.1...v1.1.0) (2023-05-15)
 
 ### [1.0.1](https://github.com/Coaktion/evolutty/compare/v1.0.0...v1.0.1) (2023-04-14)
