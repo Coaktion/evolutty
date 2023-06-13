@@ -1,9 +1,5 @@
-import { RabbitMQProvider } from './provider';
-
 export class RabbitMQRouter {
-  queueName: string;
   handler: any;
-  provider: any;
   constructor(
     queueName: string,
     handler: any,
@@ -14,9 +10,7 @@ export class RabbitMQRouter {
       throw new Error('Queue name must be provided');
     }
 
-    this.queueName = queueName;
-    this.provider = new RabbitMQProvider(this.queueName, clientOptions);
-    this.handler = new handler(this.provider, ..._args);
+    this.handler = new handler(clientOptions, queueName, ..._args);
     this.handler.start();
   }
 }

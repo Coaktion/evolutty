@@ -2,16 +2,18 @@ import { Channel, Message } from 'amqplib';
 
 import { BaseClient } from './base';
 import { RabbitMQMessageTranslator } from './message-translators';
-import { RabbitMQProvider } from './provider';
+import { RabbitMQClientOptions } from './types';
 
 export class RabbitMQHandler {
-  provider: RabbitMQProvider;
+  queueName: string;
+  clientOptions: RabbitMQClientOptions;
   client: BaseClient;
   messageTranslator: RabbitMQMessageTranslator;
   channel: Channel;
-  constructor(provider: RabbitMQProvider) {
-    this.provider = provider;
-    this.client = new BaseClient(provider.queueName, provider.clientOptions);
+  constructor(clientOptions: RabbitMQClientOptions, queueName: string) {
+    this.queueName = queueName;
+    this.clientOptions = clientOptions;
+    this.client = new BaseClient(this.queueName, this.clientOptions);
     this.messageTranslator = new RabbitMQMessageTranslator();
   }
 
@@ -27,22 +29,20 @@ export class RabbitMQHandler {
     try {
       const handled = await this.handle(content, metadata);
       if (handled) {
-        await this.provider.confirmMessage(message, this.channel);
+        this.channel.ack(message);
       }
     } catch (err) {
       if (err.deleteMessage) {
-        await this.provider.confirmMessage(message, this.channel);
-        return;
+        return this.channel.ack(message);
       }
       this.channel.nack(message);
-      await this.channel.close();
     }
   };
 
   async poll() {
-    this.channel = await this.provider.connect();
+    this.channel = await this.client.connect();
 
-    await this.channel.consume(this.provider.queueName, this.processMessage);
+    await this.channel.consume(this.client.queueName, this.processMessage);
   }
 
   async handle(_content: object, _metadata: object): Promise<boolean> {
