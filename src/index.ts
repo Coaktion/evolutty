@@ -20,7 +20,6 @@ export { SQSClientOptions } from './ext/sqs/types';
 export { SQSRouter } from './ext/sqs/routes';
 export { RabbitMQHandler } from './ext/rabbitmq/handler';
 export { RabbitMQMessageTranslator } from './ext/rabbitmq/message-translators';
-export { RabbitMQProvider } from './ext/rabbitmq/provider';
 export { RabbitMQClientOptions, TranslateRabbitMQ } from './ext/rabbitmq/types';
 export { RabbitMQRouter } from './ext/rabbitmq/routes';
 export { DeleteMessage } from './exceptions';
