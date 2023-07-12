@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "start": "nodemon --exec ts-node",
-    "build": "npm run clean && tsc",
+    "build": "npm run clean && tsc -p tsconfig.build.json",
     "watch": "tsc --watch",
     "clean": "rm -fr dist/*",
     "prepublishOnly": "npm run build",
