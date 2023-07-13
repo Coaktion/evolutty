@@ -1,19 +1,19 @@
 import logging from '../../logging';
 import { timeout } from '../../utils';
 import { BaseSQS } from './base';
-import { SQSMessageTranslator } from './message-translators';
+import { SNSQueueMessageTranslator } from './message-translators';
 import { SQSProvider } from './providers';
 import { SQSClientOptions } from './types';
 
 export class SQSHandler extends BaseSQS {
   provider: SQSProvider;
-  messageTranslator: SQSMessageTranslator;
+  messageTranslator: SNSQueueMessageTranslator;
   started: boolean;
   pollingWaitTimeMs: number;
   constructor(queueName: string, clientOptions: SQSClientOptions) {
     super(clientOptions);
     this.provider = new SQSProvider(queueName, clientOptions);
-    this.messageTranslator = new SQSMessageTranslator();
+    this.messageTranslator = new SNSQueueMessageTranslator();
     this.pollingWaitTimeMs = 30000;
   }
 

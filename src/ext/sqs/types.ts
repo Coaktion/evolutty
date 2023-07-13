@@ -1,4 +1,4 @@
-import { SQSMessageTranslator } from './message-translators';
+import { SNSQueueMessageTranslator } from './message-translators';
 
 export type SQSClientOptions = {
   apiVersion?: string;
@@ -44,5 +44,5 @@ export type MessageTranslated = {
 
 export type ProviderOptions = {
   handler: (message: MessageTranslated) => Promise<void>;
-  messageTranslator?: SQSMessageTranslator;
+  messageTranslator?: SNSQueueMessageTranslator;
 };

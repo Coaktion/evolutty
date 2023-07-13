@@ -1,7 +1,7 @@
 import { AbstractMessageTranslator } from '../../message-translators';
 import { MessageTranslated } from './types';
 
-export class SQSMessageTranslator extends AbstractMessageTranslator {
+export class SNSQueueMessageTranslator extends AbstractMessageTranslator {
   translateMessage(message: any): MessageTranslated {
     const body = JSON.parse(message.Body);
     return {
