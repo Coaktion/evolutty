@@ -20,3 +20,22 @@ export class SNSQueueMessageTranslator extends AbstractMessageTranslator {
     };
   }
 }
+
+export class SQSMessageTranslator extends AbstractMessageTranslator {
+  translateMessage(message: any): MessageTranslated {
+    return {
+      content: JSON.parse(message.Body),
+      metadata: {
+        MessageId: message.MessageId,
+        ReceiptHandle: message.ReceiptHandle,
+        MD5OfBody: message.MD5OfBody,
+        Attributes: message.Attributes,
+        MessageAttributes: message.MessageAttributes,
+        MD5OfMessageAttributes: message.MD5OfMessageAttributes,
+        EventSource: message.EventSource,
+        EventSourceARN: message.EventSourceARN,
+        AwsRegion: message.AwsRegion
+      }
+    };
+  }
+}
