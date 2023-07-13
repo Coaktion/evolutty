@@ -1,5 +1,10 @@
 import logging from './logging';
 
+interface MessageTranslatorOutput {
+  content: any;
+  metadata: any;
+}
+
 /**
  * AbstractMessageTranslator class
  * @description Abstract class to be extended by message translators
@@ -26,7 +31,7 @@ class AbstractMessageTranslator {
    * @memberof AbstractMessageTranslator
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  translate(message: any, ...args: any): object {
+  translateMessage(message: any, ...args: any): MessageTranslatorOutput {
     /**
      * Translate a given message to an appropriate format to message processing
      * This method should return a `object` instance with two keys: `content` and `metadata`.

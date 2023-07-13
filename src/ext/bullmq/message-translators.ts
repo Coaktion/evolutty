@@ -4,7 +4,7 @@ import { AbstractMessageTranslator } from '../../message-translators';
 import { TranslateBullMQ } from './types';
 
 export class BullMQMessageTranslator extends AbstractMessageTranslator {
-  translate(job: Job, token: string): TranslateBullMQ {
+  translateMessage(job: Job, token: string): TranslateBullMQ {
     return {
       content: job.data,
       metadata: {
