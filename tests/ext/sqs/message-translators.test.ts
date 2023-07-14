@@ -3,7 +3,7 @@ import { SNSQueueMessageTranslator, SQSMessageTranslator } from '../../../src';
 describe('Message translators', () => {
   describe('SNSQueueMessageTranslator', () => {
     const translator = new SNSQueueMessageTranslator();
-  
+
     it('should translate message correctly', () => {
       const message = {
         Body: JSON.stringify({
@@ -19,7 +19,7 @@ describe('Message translators', () => {
           AwsRegion: ''
         })
       };
-  
+
       const expected = {
         content: { foo: 'bar' },
         metadata: {
@@ -34,14 +34,14 @@ describe('Message translators', () => {
           AwsRegion: ''
         }
       };
-  
+
       expect(translator.translateMessage(message)).toEqual(expected);
     });
   });
 
   describe('SQSMessageTranslator', () => {
     const translator = new SQSMessageTranslator();
-  
+
     it('should translate message correctly', () => {
       const message = {
         Body: JSON.stringify({ foo: 'bar' }),
@@ -55,7 +55,7 @@ describe('Message translators', () => {
         EventSourceARN: '',
         AwsRegion: ''
       };
-  
+
       const expected = {
         content: { foo: 'bar' },
         metadata: {
@@ -70,8 +70,8 @@ describe('Message translators', () => {
           AwsRegion: ''
         }
       };
-  
+
       expect(translator.translateMessage(message)).toEqual(expected);
     });
   });
-})
+});

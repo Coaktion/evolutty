@@ -1,4 +1,7 @@
-import { SNSQueueMessageTranslator, SQSMessageTranslator } from "./message-translators";
+import {
+  SNSQueueMessageTranslator,
+  SQSMessageTranslator
+} from './message-translators';
 
 export class SQSRouter {
   queueName: string;
@@ -39,5 +42,3 @@ export class SNSQueueRouter {
     this.handler.start();
   }
 }
-
-
