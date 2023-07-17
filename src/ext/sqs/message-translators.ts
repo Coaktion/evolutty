@@ -1,7 +1,7 @@
 import { AbstractMessageTranslator } from '../../message-translators';
 import { MessageTranslated } from './types';
 
-export class SQSMessageTranslator extends AbstractMessageTranslator {
+export class SNSQueueMessageTranslator extends AbstractMessageTranslator {
   translateMessage(message: any): MessageTranslated {
     const body = JSON.parse(message.Body);
     return {
@@ -16,6 +16,25 @@ export class SQSMessageTranslator extends AbstractMessageTranslator {
         EventSource: body.EventSource,
         EventSourceARN: body.EventSourceARN,
         AwsRegion: body.AwsRegion
+      }
+    };
+  }
+}
+
+export class SQSMessageTranslator extends AbstractMessageTranslator {
+  translateMessage(message: any): MessageTranslated {
+    return {
+      content: JSON.parse(message.Body),
+      metadata: {
+        MessageId: message.MessageId,
+        ReceiptHandle: message.ReceiptHandle,
+        MD5OfBody: message.MD5OfBody,
+        Attributes: message.Attributes,
+        MessageAttributes: message.MessageAttributes,
+        MD5OfMessageAttributes: message.MD5OfMessageAttributes,
+        EventSource: message.EventSource,
+        EventSourceARN: message.EventSourceARN,
+        AwsRegion: message.AwsRegion
       }
     };
   }

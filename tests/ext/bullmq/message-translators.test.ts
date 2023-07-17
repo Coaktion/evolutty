@@ -19,7 +19,7 @@ describe('BullMQMessageTranslator', () => {
 
   it('should return a message object', () => {
     const translator = new BullMQMessageTranslator();
-    const message = translator.translate(job, token);
+    const message = translator.translateMessage(job, token);
     expect(message).toEqual({
       content: { test: 'test' },
       metadata: {

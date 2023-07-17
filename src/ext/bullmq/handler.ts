@@ -24,7 +24,7 @@ class BullMQHandler extends Worker {
    */
   protected callProcessJob(job: Job, token: string) {
     const translator = new BullMQMessageTranslator();
-    const { content, metadata } = translator.translate(job, token);
+    const { content, metadata } = translator.translateMessage(job, token);
     return this.handle({ content, metadata });
   }
 

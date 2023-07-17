@@ -5,7 +5,8 @@ describe('SQSHandler', () => {
 
   beforeEach(() => {
     sqsHandler = new SQSHandler('queueName', {
-      visibilityTimeout: 10
+      visibilityTimeout: 10,
+      messageTranslator: new SQSMessageTranslator()
     });
   });
 

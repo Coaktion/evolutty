@@ -3,7 +3,7 @@ import { AbstractMessageTranslator, StringMessageTranslator } from '../src';
 describe('AbstractMessageTranslator', () => {
   it('should throw an error when calling translate', () => {
     const translator = new AbstractMessageTranslator();
-    expect(() => translator.translate('')).toThrowError(
+    expect(() => translator.translateMessage('')).toThrowError(
       'Method not implemented.'
     );
   });

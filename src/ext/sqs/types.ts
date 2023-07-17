@@ -1,4 +1,6 @@
-import { SQSMessageTranslator } from './message-translators';
+import { AbstractMessageTranslator } from '@/message-translators';
+
+import { SNSQueueMessageTranslator } from './message-translators';
 
 export type SQSClientOptions = {
   apiVersion?: string;
@@ -7,6 +9,7 @@ export type SQSClientOptions = {
   sessionToken?: string;
   endpoint?: string;
   region?: string;
+  messageTranslator?: AbstractMessageTranslator;
   useSSL?: boolean;
   verifySSL?: boolean;
   backoffFactor?: number;
@@ -44,5 +47,5 @@ export type MessageTranslated = {
 
 export type ProviderOptions = {
   handler: (message: MessageTranslated) => Promise<void>;
-  messageTranslator?: SQSMessageTranslator;
+  messageTranslator?: SNSQueueMessageTranslator;
 };
