@@ -41,7 +41,7 @@
   "author": "Paulo Tinoco <paulovictortinoco@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@aws-sdk/client-sqs": "^3.267.0",
+    "@aws-sdk/client-sqs": "^3.370.0",
     "amqplib": "^0.10.3",
     "bullmq": "^3.5.2",
     "dotenv": "^16.0.3",
