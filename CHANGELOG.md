@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.1](https://github.com/Coaktion/evolutty/compare/v1.3.0...v1.3.1) (2023-07-18)
+
+
+### Bug Fixes
+
+* use relative imports to avoid build errors ([d1f74e4](https://github.com/Coaktion/evolutty/commit/d1f74e49bca15fcf4518b2657636d1d1ba25a0ed))
+
 ## [1.3.0](https://github.com/Coaktion/evolutty/compare/v1.2.1...v1.3.0) (2023-07-17)
 
 
