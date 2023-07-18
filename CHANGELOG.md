@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/Coaktion/evolutty/compare/v1.2.1...v1.3.0) (2023-07-17)
+
+
+### Features
+
+* add message translator to sqs client options ([6de8487](https://github.com/Coaktion/evolutty/commit/6de8487392d8b93084367ea1e3cbbfdf34b204d1))
+* add sqs message translator ([70da54a](https://github.com/Coaktion/evolutty/commit/70da54ade7f3fa4824bb7988f03f92e2970bd283))
+* add sqs queue router ([f6d3676](https://github.com/Coaktion/evolutty/commit/f6d3676311d1ae9a923acad8e535421aa6182ef6))
+* export new implementations of sqs ([0733bf4](https://github.com/Coaktion/evolutty/commit/0733bf4d73eebc97a86016808cad5349d9464c75))
+
+
+### Bug Fixes
+
+* abstract message translator contract ([7bfd89f](https://github.com/Coaktion/evolutty/commit/7bfd89f71dfc2bce4160c98cd1cc02b2972d2088))
+* adjusts abstract message translator test ([72c7724](https://github.com/Coaktion/evolutty/commit/72c7724088d6dd2d236ed6442ee18d3ee8afe989))
+* adjusts bull message translator test ([575333d](https://github.com/Coaktion/evolutty/commit/575333dda6be62c6a9dbb463229b5faeedcd7360))
+* adjusts sqs handler tests according to new structure ([9b53db4](https://github.com/Coaktion/evolutty/commit/9b53db4a866ed0f4759ca872bdeec589d85cb6bc))
+* lint ([69c5116](https://github.com/Coaktion/evolutty/commit/69c5116d29fdfa1a9e23ceecf2cf983f29c0c3f9))
+* renames SQSMessageTranslator to improve context ([10d39cb](https://github.com/Coaktion/evolutty/commit/10d39cb3c3f12ce9ae3c4014ca0d160ad2027971))
+* **sqs:** handle different message translator in handler ([27a175b](https://github.com/Coaktion/evolutty/commit/27a175b8880bfa6f5e018e0aac04154681771849))
+
 ## [1.2.0](https://github.com/Coaktion/evolutty/compare/v1.0.1...v1.2.0) (2023-06-13)
 
 
