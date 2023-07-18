@@ -1,6 +1,5 @@
-import { AbstractMessageTranslator } from '@/message-translators';
-
 import logging from '../../logging';
+import { AbstractMessageTranslator } from '../../message-translators';
 import { timeout } from '../../utils';
 import { BaseSQS } from './base';
 import { SQSProvider } from './providers';
