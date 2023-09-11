@@ -94,7 +94,7 @@ manager.start();
 ```
 
 You can also customize the logger by setting the environment variables in `local.env` file:
-  
+
 ```bash
 LOG_LEVEL=debug # default is info
 LOG_FILE_PATH=my_app.log # file that will store the logs if LOG_TRANSPORTS contains file
