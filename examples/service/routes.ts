@@ -1,23 +1,15 @@
-import { RabbitMQRouter } from '../../src';
+import { SQSRouter } from '../../src';
 import { MyHandler } from './handlers';
 
 const routers = [
   {
-    routeType: RabbitMQRouter,
+    routeType: SQSRouter,
     routeParams: {
-      username: 'user',
-      password: 'password',
-      host: 'localhost',
-      port: 5672,
-      vhost: '/',
-      heartbeat: 10,
-      protocol: 'amqp',
-      locale: 'en_US',
-      frameMax: 0,
-      channelMax: 0
+      endpoint: 'http://localhost:4566',
+      region: 'us-east-1'
     },
     handler: MyHandler,
-    queueName: 'local__service_example'
+    queueName: 'example_queue'
   }
 ];
 
