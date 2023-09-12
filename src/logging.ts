@@ -2,6 +2,8 @@ import { createLogger, format, transports } from 'winston';
 
 const level = process.env.LOG_LEVEL || 'info';
 
+const filename = process.env.LOG_OUTPUT_FILE || 'evolutty.log';
+
 const logTransports = process.env.LOG_TRANSPORTS
   ? process.env.LOG_TRANSPORTS.split(',')
   : ['console'];
@@ -16,7 +18,7 @@ const logging = createLogger({
     switch (transport.trim()) {
       case 'file':
         return new transports.File({
-          filename: process.env.LOG_OUTPUT_FILE,
+          filename,
           level
         });
       case 'console':
