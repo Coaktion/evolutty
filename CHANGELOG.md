@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/Coaktion/evolutty/compare/v1.3.1...v1.4.0) (2023-09-12)
+
+
+### Features
+
+* configure logger by environment variables ([53c3176](https://github.com/Coaktion/evolutty/commit/53c317665e1057c15d9e9e1fbd28718869611023))
+
+
+### Bug Fixes
+
+* add default log file name ([f10de1d](https://github.com/Coaktion/evolutty/commit/f10de1d4989831cac548c5100bdeb760f57997fb))
+* set default transports array ([4cb90b7](https://github.com/Coaktion/evolutty/commit/4cb90b73ceca6f1f9dc1521b7c2ed851db19dc1b))
+* store filename in a variable ([36f466b](https://github.com/Coaktion/evolutty/commit/36f466bd784b227041dbb8617e800e02e239f1f4))
+
 ### [1.3.1](https://github.com/Coaktion/evolutty/compare/v1.3.0...v1.3.1) (2023-07-18)
 
 
