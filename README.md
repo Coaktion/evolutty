@@ -93,6 +93,15 @@ const manager = new EvoluttyManager(routers);
 manager.start();
 ```
 
+You can also customize the logger by setting the environment variables in `local.env` file:
+
+```bash
+LOG_LEVEL=debug # default is info
+LOG_FILE_PATH=my_app.log # file that will store the logs if LOG_TRANSPORTS contains file
+LOG_TRANSPORTS=console,file # comma separated values (currently only console and file are supported)
+LOG_FORMAT=json # json or simple
+```
+
 ## License
 
 **Evolutty** is [MIT](./LICENSE)

@@ -1,25 +1,32 @@
 import { createLogger, format, transports } from 'winston';
 
+const level = process.env.LOG_LEVEL || 'info';
+
+const filename = process.env.LOG_OUTPUT_FILE || 'evolutty.log';
+
+const logTransports = process.env.LOG_TRANSPORTS
+  ? process.env.LOG_TRANSPORTS.split(',')
+  : ['console'];
+
 const logging = createLogger({
   format: format.combine(
     format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
     format.errors({ stack: true }),
-    format.json()
+    process.env.LOG_FORMAT ? format[process.env.LOG_FORMAT]() : format.json()
   ),
-  transports: [
-    new transports.File({ filename: 'error.log', level: 'error' }),
-    new transports.File({ filename: 'info.log', level: 'info' }),
-    new transports.File({ filename: 'debug.log', level: 'debug' }),
-    new transports.File({ filename: 'combined.log' })
-  ]
+  transports: logTransports.map((transport: string) => {
+    switch (transport.trim()) {
+      case 'file':
+        return new transports.File({
+          filename,
+          level
+        });
+      case 'console':
+        return new transports.Console({ level });
+      default:
+        return new transports.Console({ level });
+    }
+  })
 });
-
-if (process.env.NODE_ENV !== 'production') {
-  logging.add(
-    new transports.Console({
-      format: format.simple()
-    })
-  );
-}
 
 export default logging;
