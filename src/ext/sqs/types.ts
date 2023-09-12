@@ -1,4 +1,5 @@
-import { AbstractMessageTranslator } from '../../message-translators';
+import { AbstractMessageTranslator } from '@/message-translators';
+
 import { SNSQueueMessageTranslator } from './message-translators';
 
 export type SQSClientOptions = {
