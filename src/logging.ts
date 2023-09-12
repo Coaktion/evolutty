@@ -16,7 +16,7 @@ const logging = createLogger({
     switch (transport.trim()) {
       case 'file':
         return new transports.File({
-          filename: process.env.LOG_OUTPUT_FILE,
+          filename: process.env.LOG_OUTPUT_FILE || 'evolutty.log',
           level
         });
       case 'console':
