@@ -1,4 +1,3 @@
-import { calculateBackoffMultiplier } from '@/utils';
 import {
   ChangeMessageVisibilityCommand,
   DeleteMessageCommand,
@@ -6,6 +5,7 @@ import {
 } from '@aws-sdk/client-sqs';
 
 import AbstractProvider from '../../providers';
+import { calculateBackoffMultiplier } from '../../utils';
 import { BaseSQS } from './base';
 import { SQSClientOptions } from './types';
 
