@@ -1,11 +1,10 @@
 import { AbstractMessageTranslator } from '../../message-translators';
 import { MessageTranslated } from './types';
 
-export class SNSQueueMessageTranslator extends AbstractMessageTranslator {
-  translateMessage(message: any): MessageTranslated {
-    const body = JSON.parse(message.Body);
+class BaseMessageTranslator extends AbstractMessageTranslator {
+  translateMessage(content: any, body: any): MessageTranslated {
     return {
-      content: JSON.parse(body.Message),
+      content,
       metadata: {
         MessageId: body.MessageId,
         ReceiptHandle: body.ReceiptHandle,
@@ -21,21 +20,17 @@ export class SNSQueueMessageTranslator extends AbstractMessageTranslator {
   }
 }
 
-export class SQSMessageTranslator extends AbstractMessageTranslator {
+export class SNSQueueMessageTranslator extends BaseMessageTranslator {
   translateMessage(message: any): MessageTranslated {
-    return {
-      content: JSON.parse(message.Body),
-      metadata: {
-        MessageId: message.MessageId,
-        ReceiptHandle: message.ReceiptHandle,
-        MD5OfBody: message.MD5OfBody,
-        Attributes: message.Attributes,
-        MessageAttributes: message.MessageAttributes,
-        MD5OfMessageAttributes: message.MD5OfMessageAttributes,
-        EventSource: message.EventSource,
-        EventSourceARN: message.EventSourceARN,
-        AwsRegion: message.AwsRegion
-      }
-    };
+    const body = JSON.parse(message.Body);
+    const content = JSON.parse(body.Message);
+    return super.translateMessage(content, body);
+  }
+}
+
+export class SQSMessageTranslator extends BaseMessageTranslator {
+  translateMessage(message: any): MessageTranslated {
+    const content = JSON.parse(message.Body);
+    return super.translateMessage(content, message);
   }
 }
