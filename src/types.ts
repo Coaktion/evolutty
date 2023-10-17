@@ -7,7 +7,9 @@ export interface RoutesType {
    * const routeType = BullMQRouter;
    * @type {any}
    * @memberof RoutesType
-   * @see BullMQRouter
+   * @see {@link BullMQRouter}
+   * @see {@link RabbitMQRouter}
+   * @see {@link SQSRouter}
    */
   routeType: any;
   /**
@@ -45,8 +47,8 @@ export interface RoutesType {
    * };
    * @type {object}
    * @memberof RoutesType
-   * @see BullMQRouter
-   * @see SQSRouter
+   * @see {@link RabbitMQClientOptions}
+   * @see {@link SQSClientOptions}
    */
   routeParams?: object;
 }
