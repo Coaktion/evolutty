@@ -36,18 +36,8 @@ describe('SQSHandler', () => {
       );
     });
 
-    it('should set messageSource to SNS when not provided', () => {
-      const clientOptions = {} as SQSClientOptions;
-      const router = new SQSRouter('test', Handler, clientOptions);
-
-      expect(router).toBeDefined();
-      expect(clientOptions.messageSource).toEqual('SNS');
-    });
-
     it('should set message translator to SNSQueueMessageTranslator', () => {
-      const clientOptions = {
-        messageSource: 'SNS'
-      } as SQSClientOptions;
+      const clientOptions = {} as SQSClientOptions;
       const router = new SQSRouter('test', Handler, clientOptions);
 
       expect(router).toBeDefined();
