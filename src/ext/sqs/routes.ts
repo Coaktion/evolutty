@@ -17,13 +17,7 @@ export class SQSRouter {
       throw new Error('Queue name must be provided');
     }
 
-    if (!clientOptions.messageSource) {
-      clientOptions.messageSource = 'SNS';
-    }
-
-    if (clientOptions.messageSource === 'SNS') {
-      clientOptions.messageTranslator = new SNSQueueMessageTranslator();
-    }
+    clientOptions.messageTranslator = new SNSQueueMessageTranslator();
 
     if (clientOptions.messageSource === 'SQS') {
       clientOptions.messageTranslator = new SQSMessageTranslator();
