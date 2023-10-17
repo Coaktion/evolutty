@@ -14,6 +14,8 @@ export type SQSClientOptions = {
   backoffFactor?: number;
   visibilityTimeout?: number;
   messageSource?: 'SQS' | 'SNS';
+  maxNumberOfMessages?: number;
+  waitTimeSeconds?: number;
 };
 
 export type SQSMessageAttributes = {

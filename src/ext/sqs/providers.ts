@@ -73,9 +73,9 @@ export class SQSProvider extends AbstractProvider {
     const messages = await this.client.client.send(
       new ReceiveMessageCommand({
         QueueUrl: queueUrl,
-        MaxNumberOfMessages: 10,
+        MaxNumberOfMessages: this.clientOptions.maxNumberOfMessages || 10,
         VisibilityTimeout: this.clientOptions.visibilityTimeout,
-        WaitTimeSeconds: 20
+        WaitTimeSeconds: this.clientOptions.waitTimeSeconds || 20
       })
     );
     return messages.Messages;
