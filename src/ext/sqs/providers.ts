@@ -7,8 +7,12 @@ import {
 import AbstractProvider from '../../providers';
 import { calculateBackoffMultiplier } from '../../utils';
 import { BaseSQS } from './base';
+import {
+  DEFAULT_MAX_NUMBER_OF_MESSAGES,
+  DEFAULT_VISIBILITY_TIMEOUT,
+  DEFAULT_WAIT_TIME_SECONDS
+} from './constants';
 import { SQSClientOptions } from './types';
-import { DEFAULT_MAX_NUMBER_OF_MESSAGES, DEFAULT_VISIBILITY_TIMEOUT, DEFAULT_WAIT_TIME_SECONDS } from './constants';
 
 export class SQSProvider extends AbstractProvider {
   queueName: string;
@@ -74,9 +78,13 @@ export class SQSProvider extends AbstractProvider {
     const messages = await this.client.client.send(
       new ReceiveMessageCommand({
         QueueUrl: queueUrl,
-        MaxNumberOfMessages: this.clientOptions.maxNumberOfMessages || DEFAULT_MAX_NUMBER_OF_MESSAGES,
-        VisibilityTimeout: this.clientOptions.visibilityTimeout || DEFAULT_VISIBILITY_TIMEOUT,
-        WaitTimeSeconds: this.clientOptions.waitTimeSeconds || DEFAULT_WAIT_TIME_SECONDS
+        MaxNumberOfMessages:
+          this.clientOptions.maxNumberOfMessages ||
+          DEFAULT_MAX_NUMBER_OF_MESSAGES,
+        VisibilityTimeout:
+          this.clientOptions.visibilityTimeout || DEFAULT_VISIBILITY_TIMEOUT,
+        WaitTimeSeconds:
+          this.clientOptions.waitTimeSeconds || DEFAULT_WAIT_TIME_SECONDS
       })
     );
     return messages.Messages;
