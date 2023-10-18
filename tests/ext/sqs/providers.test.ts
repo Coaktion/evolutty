@@ -153,6 +153,7 @@ describe('SQSProvider', () => {
   });
 
   it('should return an empty array when fetchMessages is called and no messages are returned', async () => {
+    sqsProvider.clientOptions = {};
     sqsProvider.client.queueUrl = jest.fn().mockResolvedValue('queueUrl');
     sqsProvider.client.client.send = jest.fn().mockResolvedValue({
       Messages: []

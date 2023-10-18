@@ -1,6 +1,5 @@
 import {
   SNSQueueMessageTranslator,
-  SNSQueueRouter,
   SQSClientOptions,
   SQSHandler,
   SQSMessageTranslator,
@@ -33,30 +32,31 @@ describe('SQSHandler', () => {
       expect(router).toBeDefined();
       expect(clientOptions.messageTranslator).toBeDefined();
       expect(clientOptions.messageTranslator).toBeInstanceOf(
-        SQSMessageTranslator
-      );
-    });
-  });
-
-  describe('SNSQueueRouter', () => {
-    it('should return a router object', () => {
-      expect(SQSHandler).toBeDefined();
-    });
-
-    it('should throw an error when queue name is not provided', () => {
-      expect(() => new SNSQueueRouter('', Handler, {})).toThrowError(
-        'Queue name must be provided'
+        SNSQueueMessageTranslator
       );
     });
 
-    it('should return a router object', () => {
+    it('should set message translator to SNSQueueMessageTranslator', () => {
       const clientOptions = {} as SQSClientOptions;
-      const router = new SNSQueueRouter('test', Handler, clientOptions);
+      const router = new SQSRouter('test', Handler, clientOptions);
 
       expect(router).toBeDefined();
       expect(clientOptions.messageTranslator).toBeDefined();
       expect(clientOptions.messageTranslator).toBeInstanceOf(
         SNSQueueMessageTranslator
+      );
+    });
+
+    it('should set message translator to SQSMessageTranslator', () => {
+      const clientOptions = {
+        messageSource: 'SQS'
+      } as SQSClientOptions;
+      const router = new SQSRouter('test', Handler, clientOptions);
+
+      expect(router).toBeDefined();
+      expect(clientOptions.messageTranslator).toBeDefined();
+      expect(clientOptions.messageTranslator).toBeInstanceOf(
+        SQSMessageTranslator
       );
     });
   });

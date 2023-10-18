@@ -13,6 +13,9 @@ export type SQSClientOptions = {
   verifySSL?: boolean;
   backoffFactor?: number;
   visibilityTimeout?: number;
+  messageSource?: 'SQS' | 'SNS';
+  maxNumberOfMessages?: number;
+  waitTimeSeconds?: number;
 };
 
 export type SQSMessageAttributes = {

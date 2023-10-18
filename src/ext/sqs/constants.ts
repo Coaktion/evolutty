@@ -1,0 +1,5 @@
+export const DEFAULT_MAX_NUMBER_OF_MESSAGES = 10;
+
+export const DEFAULT_WAIT_TIME_SECONDS = 20;
+
+export const DEFAULT_VISIBILITY_TIMEOUT = 30;
