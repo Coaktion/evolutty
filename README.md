@@ -89,7 +89,6 @@ const routers = [
   }
 ];
 
-
 const manager = new EvoluttyManager(routers);
 manager.start();
 ```
