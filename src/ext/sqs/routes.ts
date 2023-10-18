@@ -1,4 +1,5 @@
 import { ListQueuesCommand } from '@aws-sdk/client-sqs';
+
 import { BaseClient } from './base';
 import {
   SNSQueueMessageTranslator,
@@ -16,7 +17,7 @@ export class SQSRouter extends BaseClient {
     clientOptions: SQSClientOptions,
     ..._args: any[]
   ) {
-    super(clientOptions)
+    super(clientOptions);
 
     if (!queueName) {
       throw new Error('Queue name must be provided');
@@ -45,7 +46,7 @@ export class SQSRouter extends BaseClient {
       new ListQueuesCommand({
         QueueNamePrefix: prefix
       })
-    )
+    );
 
     const urls = data.QueueUrls || [];
 
