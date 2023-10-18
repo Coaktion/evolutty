@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/Coaktion/evolutty/compare/v1.4.0...v2.0.0) (2023-10-18)
+
+
+### Features
+
+* add message source to sqs client options ([f2436c7](https://github.com/Coaktion/evolutty/commit/f2436c7598e387bad89d51aba4346f94be70d148))
+
+
+### Bug Fixes
+
+* format ([a63c9f1](https://github.com/Coaktion/evolutty/commit/a63c9f199844070486c74f7eb68ca55da7f7ede2))
+* **sqs:** adjusts translators conditional ([d37fd78](https://github.com/Coaktion/evolutty/commit/d37fd785e30b7ba1de2cbce83f2ca0d58c8e515f))
+* **sqs:** constants to store default options ([05a1f84](https://github.com/Coaktion/evolutty/commit/05a1f84b5b70ea9b3eaaafac77fdeab230d8e1d0))
+* **sqs:** make fetch messages method more flexible ([fcd414e](https://github.com/Coaktion/evolutty/commit/fcd414e055180fb5e32ed277c9bbb0db9adff500))
+* **sqs:** update type docs ([85476e9](https://github.com/Coaktion/evolutty/commit/85476e9b4f7a39056050b009cc9aa1440ab972ee))
+
 ## [1.4.0](https://github.com/Coaktion/evolutty/compare/v1.3.1...v1.4.0) (2023-09-12)
 
 
