@@ -1,6 +1,6 @@
 {
   "name": "@coaktion/evolutty",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "A simple queue manager for BullMQ and AWS SQS",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

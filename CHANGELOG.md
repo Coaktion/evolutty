@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/Coaktion/evolutty/compare/v2.0.0...v2.1.0) (2023-10-19)
+
+
+### Features
+
+* **sqs:** add an option to use multiple queues per route ([d6767c6](https://github.com/Coaktion/evolutty/commit/d6767c655c72701754768ea18eee245538725047))
+* **sqs:** consumes multiples queues per route ([533b519](https://github.com/Coaktion/evolutty/commit/533b51917a13bc7a464ff0325037e7ce2f4ba9a7))
+
+
+### Bug Fixes
+
+* format ([857d3fa](https://github.com/Coaktion/evolutty/commit/857d3fa2079dcf7be4dbda567844ae7f65073704))
+* lint format ([2c916dd](https://github.com/Coaktion/evolutty/commit/2c916dd080679178ab4f3a53c24621adda319363))
+
 ## [2.0.0](https://github.com/Coaktion/evolutty/compare/v1.4.0...v2.0.0) (2023-10-18)
 
 
