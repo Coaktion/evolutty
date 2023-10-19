@@ -93,7 +93,11 @@ const manager = new EvoluttyManager(routers);
 manager.start();
 ```
 
-You can also customize the logger by setting the environment variables in `local.env` file:
+### Observations
+
+- The **queueName** option is used as a prefix to fetch queues when the **prefixBasedQueues** option is equals to true on **SQS** route params (default is false)
+
+- You can also customize the logger by setting the environment variables in `local.env` file:
 
 ```bash
 LOG_LEVEL=debug # default is info

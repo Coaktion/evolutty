@@ -1,3 +1,5 @@
+import { ListQueuesCommand, SQSClient } from '@aws-sdk/client-sqs';
+
 import {
   SNSQueueMessageTranslator,
   SQSClientOptions,
@@ -7,8 +9,8 @@ import {
 } from '../../../src';
 
 class Handler {
-  start = jest.fn();
-  async handle() {
+  public start() {}
+  public async handle() {
     return true;
   }
 }
@@ -58,6 +60,29 @@ describe('SQSHandler', () => {
       expect(clientOptions.messageTranslator).toBeInstanceOf(
         SQSMessageTranslator
       );
+    });
+
+    it.each([
+      undefined,
+      [
+        'http://localhost:4566/000000000000/test',
+        'http://localhost:4566/000000000000/test2'
+      ]
+    ])(`should handle prefix based queues`, async (urls) => {
+      const clientOptions = {
+        prefixBasedQueues: true
+      } as SQSClientOptions;
+
+      const mockSend = jest.fn().mockResolvedValueOnce({
+        QueueUrls: urls
+      });
+
+      SQSClient.prototype.send = mockSend;
+
+      const router = new SQSRouter('test', Handler, clientOptions);
+
+      expect(router).toBeDefined();
+      expect(mockSend).toHaveBeenCalledWith(expect.any(ListQueuesCommand));
     });
   });
 });
