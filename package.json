@@ -48,7 +48,7 @@
     "winston": "^3.8.2"
   },
   "devDependencies": {
-    "@trivago/prettier-plugin-sort-imports": "^4.0.0",
+    "@trivago/prettier-plugin-sort-imports": "^4.2.1",
     "@types/amqplib": "^0.10.1",
     "@types/ioredis-mock": "^8.2.1",
     "@types/jest": "^29.2.5",
