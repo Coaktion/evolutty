@@ -30,29 +30,33 @@ export class SQSRouter extends BaseClient {
     }
 
     this.queueName = queueName;
+    this.handler = handler;
     this.clientOptions = clientOptions;
-
-    if (clientOptions.prefixBasedQueues) {
-      this.handlePrefixBasedQueues(queueName, handler);
-      return;
-    }
-
-    this.handler = new handler(this.queueName, clientOptions);
-    this.handler.start();
   }
 
-  private async handlePrefixBasedQueues(prefix: string, handler: any) {
+  private async handlePrefixBasedQueues(prefix: string, handler: any): Promise<void> {
     const data = await this.client.send(
       new ListQueuesCommand({
         QueueNamePrefix: prefix
       })
     );
 
-    const urls = data.QueueUrls || [];
+    if(!data.QueueUrls) {
+      throw new Error('No queues found with prefix: ' + prefix);
+    }
 
-    for (const queueUrl of urls) {
+    for (const queueUrl of data.QueueUrls) {
       const queueHandler = new handler(queueUrl, this.clientOptions);
       queueHandler.start();
     }
+  }
+
+  public async start(): Promise<void> {
+    if (this.clientOptions.prefixBasedQueues) {
+      return this.handlePrefixBasedQueues(this.queueName, this.handler);
+    }
+
+    const queueHandler = new this.handler(this.queueName, this.clientOptions);
+    queueHandler.start();
   }
 }
