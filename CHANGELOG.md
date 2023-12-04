@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.1](https://github.com/Coaktion/evolutty/compare/v2.1.0...v2.1.1) (2023-12-04)
+
+
+### Bug Fixes
+
+* add prefix based error handling to sqs ([6a11973](https://github.com/Coaktion/evolutty/commit/6a11973ac2fb63049c57d9e60fecf4e17e09bcaa))
+* add start method to all routers ([dd5ed11](https://github.com/Coaktion/evolutty/commit/dd5ed113b64556867a0796729d2b2609d338372c))
+* lint ([6b93276](https://github.com/Coaktion/evolutty/commit/6b93276d86bef93d573f1b0a202072ff2ac3ec02))
+
 ## [2.1.0](https://github.com/Coaktion/evolutty/compare/v2.0.0...v2.1.0) (2023-10-19)
 
 
