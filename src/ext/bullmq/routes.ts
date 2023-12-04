@@ -5,18 +5,21 @@ class BullMQRouter {
   protected functionFake: any = () => {};
   queueName: string;
   handler: any;
-  constructor(queueName: string, handler: any, ...args: any[]) {
+  constructor(queueName: string, handler: any) {
     if (!queueName) {
       throw new Error('Queue name must be provided');
     }
 
     this.queueName = queueName;
+    this.handler = handler;
+  }
+
+  async start() {
     const { connection, concurrency } = config.bullmq;
-    this.handler = new handler(
+    this.handler = new this.handler(
       this.queueName,
       this.functionFake,
-      { connection, concurrency },
-      ...args
+      { connection, concurrency }
     );
   }
 }

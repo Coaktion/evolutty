@@ -14,8 +14,11 @@ describe('RabbitMQRouter', () => {
     );
   });
 
-  it('Should return a router object', () => {
+  it('Should return a router object', async () => {
     const router = new RabbitMQRouter('test-queue', Handler, {} as any);
+
+    await router.start();
+
     expect(router).toBeDefined();
   });
 });

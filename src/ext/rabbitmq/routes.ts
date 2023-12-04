@@ -1,5 +1,9 @@
+import { RabbitMQClientOptions } from "./types";
+
 export class RabbitMQRouter {
   handler: any;
+  queueName: string;
+  clientOptions: RabbitMQClientOptions;
   constructor(
     queueName: string,
     handler: any,
@@ -10,7 +14,13 @@ export class RabbitMQRouter {
       throw new Error('Queue name must be provided');
     }
 
-    this.handler = new handler(clientOptions, queueName, ..._args);
+    this.clientOptions = clientOptions;
+    this.queueName = queueName;
+    this.handler = handler;
+  }
+
+  async start() {
+    this.handler = new this.handler(this.clientOptions, this.queueName);
     this.handler.start();
   }
 }
