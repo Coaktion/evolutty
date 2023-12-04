@@ -92,15 +92,15 @@ describe('SQSHandler', () => {
         const clientOptions = {
           prefixBasedQueues: true
         } as SQSClientOptions;
-  
+
         const mockSend = jest.fn().mockResolvedValueOnce({
           QueueUrls: undefined
         });
-  
+
         SQSClient.prototype.send = mockSend;
         SQSClient.prototype.destroy = jest.fn();
         logging.error = jest.fn();
-        
+
         const router = new SQSRouter('test', Handler, clientOptions);
 
         await router.start();

@@ -1,15 +1,16 @@
-import { SQSRouter } from '../../src';
+import { RoutesType, SQSClientOptions, SQSRouter } from '../../src';
 import { MyHandler } from './handlers';
 
-const routers = [
+const routers: RoutesType[] = [
   {
     routeType: SQSRouter,
     routeParams: {
-      endpoint: 'http://localhost:4566',
-      region: 'us-east-1'
-    },
+      region: 'us-east-1',
+      prefixBasedQueues: true,
+      messageSource: 'SQS'
+    } as SQSClientOptions,
     handler: MyHandler,
-    queueName: 'example_queue'
+    queueName: 'aasdas'
   }
 ];
 

@@ -34,14 +34,17 @@ export class SQSRouter extends BaseClient {
     this.clientOptions = clientOptions;
   }
 
-  private async handlePrefixBasedQueues(prefix: string, handler: any): Promise<void> {
+  private async handlePrefixBasedQueues(
+    prefix: string,
+    handler: any
+  ): Promise<void> {
     const data = await this.client.send(
       new ListQueuesCommand({
         QueueNamePrefix: prefix
       })
     );
 
-    if(!data.QueueUrls) {
+    if (!data.QueueUrls) {
       throw new Error('No queues found with prefix: ' + prefix);
     }
 

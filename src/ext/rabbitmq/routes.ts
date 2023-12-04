@@ -1,4 +1,4 @@
-import { RabbitMQClientOptions } from "./types";
+import { RabbitMQClientOptions } from './types';
 
 export class RabbitMQRouter {
   handler: any;

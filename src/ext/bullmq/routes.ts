@@ -16,11 +16,10 @@ class BullMQRouter {
 
   async start() {
     const { connection, concurrency } = config.bullmq;
-    this.handler = new this.handler(
-      this.queueName,
-      this.functionFake,
-      { connection, concurrency }
-    );
+    this.handler = new this.handler(this.queueName, this.functionFake, {
+      connection,
+      concurrency
+    });
   }
 }
 
