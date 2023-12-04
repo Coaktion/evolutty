@@ -3,6 +3,8 @@ import { EvoluttyManager } from '../src';
 
 class MockRouter {
   constructor(_queueName: string, _handler: any) {}
+
+  start() {}
 }
 
 const routes = [

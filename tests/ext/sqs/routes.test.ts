@@ -5,7 +5,8 @@ import {
   SQSClientOptions,
   SQSHandler,
   SQSMessageTranslator,
-  SQSRouter
+  SQSRouter,
+  logging
 } from '../../../src';
 
 class Handler {
@@ -27,9 +28,11 @@ describe('SQSHandler', () => {
       );
     });
 
-    it('should return a router object', () => {
+    it('should return a router object', async () => {
       const clientOptions = {} as SQSClientOptions;
       const router = new SQSRouter('test', Handler, clientOptions);
+
+      await router.start();
 
       expect(router).toBeDefined();
       expect(clientOptions.messageTranslator).toBeDefined();
@@ -62,27 +65,51 @@ describe('SQSHandler', () => {
       );
     });
 
-    it.each([
-      undefined,
-      [
-        'http://localhost:4566/000000000000/test',
-        'http://localhost:4566/000000000000/test2'
-      ]
-    ])(`should handle prefix based queues`, async (urls) => {
+    it(`should handle prefix based queues`, async () => {
       const clientOptions = {
         prefixBasedQueues: true
       } as SQSClientOptions;
 
       const mockSend = jest.fn().mockResolvedValueOnce({
-        QueueUrls: urls
+        QueueUrls: [
+          'http://localhost:4566/123456789012/test-1',
+          'http://localhost:4566/123456789012/test-2'
+        ]
       });
 
       SQSClient.prototype.send = mockSend;
 
       const router = new SQSRouter('test', Handler, clientOptions);
 
+      await router.start();
+
       expect(router).toBeDefined();
       expect(mockSend).toHaveBeenCalledWith(expect.any(ListQueuesCommand));
+    });
+
+    it(`should to throw an error when no urls are found with given prefix`, async () => {
+      try {
+        const clientOptions = {
+          prefixBasedQueues: true
+        } as SQSClientOptions;
+
+        const mockSend = jest.fn().mockResolvedValueOnce({
+          QueueUrls: undefined
+        });
+
+        SQSClient.prototype.send = mockSend;
+        SQSClient.prototype.destroy = jest.fn();
+        logging.error = jest.fn();
+
+        const router = new SQSRouter('test', Handler, clientOptions);
+
+        await router.start();
+
+        expect(router).toBeDefined();
+      } catch (error) {
+        expect(error).toBeDefined();
+        expect(error.message).toBe('No queues found with prefix: test');
+      }
     });
   });
 });

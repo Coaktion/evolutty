@@ -27,8 +27,11 @@ describe('BullMQRouter', () => {
     );
   });
 
-  it('should return a router object', () => {
+  it('should return a router object', async () => {
     const router = new BullMQRouter('test', Handler);
+
+    await router.start();
+
     expect(router).toBeDefined();
   });
 });
