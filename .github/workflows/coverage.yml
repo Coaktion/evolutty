@@ -7,32 +7,8 @@ on:
     branches:
       - main
 
-permissions:
-  contents: read
-
-env:
-  CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [14.x]
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-
-      - name: Install Node Modules
-        run: npm ci
-
-      - name: Report Coverage
-        uses: paambaati/codeclimate-action@v3.2.0
-        with:
-          coverageCommand: npm test --reporter=lcov
+  coverage:
+    uses: "Coaktion/aktie-devops/.github/workflows/coverage.yml@main"
+    with:
+      node_version: 18.x

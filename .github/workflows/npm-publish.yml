@@ -6,4 +6,4 @@ on:
 
 jobs:
   publish:
-    uses: "Coaktion/aktie-devops/.github/workflows/publish.yml@main"
+    uses: "Coaktion/aktie-devops/.github/workflows/npm-publish.yml@main"
