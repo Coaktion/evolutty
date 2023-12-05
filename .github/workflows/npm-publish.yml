@@ -9,3 +9,4 @@ jobs:
     uses: "Coaktion/aktie-devops/.github/workflows/npm-publish.yml@main"
     with:
       open_source: true
+    secrets: inherit
