@@ -4,50 +4,6 @@ on:
   release:
     types: [published]
 
-env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-permissions:
-  contents: read
-  packages: write
-
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - run: npm ci
-      - run: npm test
-
-  publish-github:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          registry-url: https://npm.pkg.github.com/
-      - run: npm ci
-      - run: npm publish
-
-  publish-npm:
-    if: ${{ vars.OPEN_SOURCE == 'true' }}
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          registry-url: https://registry.npmjs.org/
-      - run: |
-          sed -i 's/npm.pkg.github.com/registry.npmjs.org/g' package.json
-          sed -i 's/npm.pkg.github.com/registry.npmjs.org/g' .npmrc
-          sed -i 's/GITHUB_TOKEN/NPM_TOKEN/g' .npmrc
-      - run: npm ci
-      - run: npm publish
+  publish:
+    uses: "Coaktion/aktie-devops/.github/workflows/npm-publish.yml@main"

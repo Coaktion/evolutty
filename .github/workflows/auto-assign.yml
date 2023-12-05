@@ -1,0 +1,9 @@
+name: Auto Assign PR to Author
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  add-assignee:
+    uses: "Coaktion/aktie-devops/.github/workflows/auto-assign.yml@main"
