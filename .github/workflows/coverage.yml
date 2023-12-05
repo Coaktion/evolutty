@@ -12,3 +12,5 @@ jobs:
     uses: "Coaktion/aktie-devops/.github/workflows/coverage.yml@main"
     with:
       node_version: 18.x
+    secrets:
+      cc_test_reporter_id: ${{ secrets.CC_TEST_REPORTER_ID }}  
