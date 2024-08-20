@@ -1,6 +1,7 @@
 import { ListQueuesCommand, SQSClient } from '@aws-sdk/client-sqs';
 
 import {
+  AbstractMessageTranslator,
   SNSQueueMessageTranslator,
   SQSClientOptions,
   SQSHandler,
@@ -13,6 +14,12 @@ class Handler {
   public start() {}
   public async handle() {
     return true;
+  }
+}
+
+class MessageTranslator extends AbstractMessageTranslator {
+  translateMessage() {
+    return { content: 'content', metadata: 'metadata' };
   }
 }
 
@@ -85,6 +92,19 @@ describe('SQSHandler', () => {
 
       expect(router).toBeDefined();
       expect(mockSend).toHaveBeenCalledWith(expect.any(ListQueuesCommand));
+    });
+
+    it('when does the clientOptions messageTranslator come', async () => {
+      const clientOptions: SQSClientOptions = {
+        messageTranslator: new MessageTranslator()
+      };
+      const router = new SQSRouter('test', Handler, clientOptions);
+
+      expect(router).toBeDefined();
+      expect(router.clientOptions.messageTranslator).toBeDefined();
+      expect(router.clientOptions.messageTranslator).toBeInstanceOf(
+        MessageTranslator
+      );
     });
 
     it(`should to throw an error when no urls are found with given prefix`, async () => {
