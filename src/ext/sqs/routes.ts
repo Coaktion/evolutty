@@ -23,10 +23,12 @@ export class SQSRouter extends BaseClient {
       throw new Error('Queue name must be provided');
     }
 
-    clientOptions.messageTranslator = new SNSQueueMessageTranslator();
+    if (!clientOptions.messageTranslator) {
+      clientOptions.messageTranslator = new SNSQueueMessageTranslator();
 
-    if (clientOptions.messageSource === 'SQS') {
-      clientOptions.messageTranslator = new SQSMessageTranslator();
+      if (clientOptions.messageSource === 'SQS') {
+        clientOptions.messageTranslator = new SQSMessageTranslator();
+      }
     }
 
     this.queueName = queueName;
