@@ -106,6 +106,8 @@ LOG_TRANSPORTS=console,file # comma separated values (currently only console and
 LOG_FORMAT=json # json or simple
 ```
 
+- To perform graceful shutdown, simply set the NODE_ENV variable to your environment. If it is set to local, it will not wait for messages to be processed.
+
 ## License
 
 **Evolutty** is [MIT](./LICENSE)

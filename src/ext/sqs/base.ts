@@ -8,7 +8,7 @@ export class BaseClient {
     this.client = new SQSClient(clientOptions);
   }
 
-  stop() {
+  async stop() {
     this.client.destroy();
   }
 }

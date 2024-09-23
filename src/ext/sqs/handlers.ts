@@ -10,6 +10,7 @@ export class SQSHandler extends BaseSQS {
   messageTranslator: AbstractMessageTranslator;
   started: boolean;
   pollingWaitTimeMs: number;
+  signalStop: boolean;
   constructor(queueName: string, clientOptions: SQSClientOptions) {
     super(clientOptions);
     this.provider = new SQSProvider(queueName, clientOptions);
@@ -17,22 +18,24 @@ export class SQSHandler extends BaseSQS {
     this.pollingWaitTimeMs = 30000;
   }
 
+  async stop(): Promise<void> {
+    this.signalStop = true;
+    logging.info(`Stopping AWS Queue ${this.provider.queueName}`);
+    if (process.env.NODE_ENV === 'local') {
+      this.started = false;
+    }
+    while (this.started) {
+      await timeout(10);
+    }
+  }
+
   start(): void {
     if (!this.started) {
       logging.info(`Starting AWS Queue ${this.provider.queueName}`);
       this.started = true;
+      this.signalStop = false;
       this.poll();
     }
-  }
-
-  stop(): void {
-    if (!this.started) {
-      logging.info(`Stopping AWS Queue ${this.provider.queueName}`);
-      return void 0;
-    }
-
-    logging.info(`Stopping AWS Queue ${this.provider.queueName}`);
-    this.started = false;
   }
 
   async processMessage(message: any): Promise<void> {
@@ -44,7 +47,7 @@ export class SQSHandler extends BaseSQS {
         await this.provider.confirmMessage(message);
       }
     } catch (err) {
-      logging.error(`Error handling message ${err}`);
+      logging.error(`Error handling message ${JSON.stringify(err)}`);
       if (err.deleteMessage) {
         await this.provider.confirmMessage(message);
       } else {
@@ -76,6 +79,11 @@ export class SQSHandler extends BaseSQS {
   }
 
   async callPoll(): Promise<void> {
+    if (this.signalStop) {
+      this.started = false;
+      logging.info(`AWS Queue ${this.provider.queueName} stopped`);
+      return void 0;
+    }
     await timeout(this.pollingWaitTimeMs);
     await this.poll();
   }

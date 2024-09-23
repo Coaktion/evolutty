@@ -7,10 +7,17 @@ import {
 } from './message-translators';
 import { SQSClientOptions } from './types';
 
+const mapperTranslator = {
+  SNS: SNSQueueMessageTranslator,
+  SQS: SQSMessageTranslator,
+  undefined: SNSQueueMessageTranslator
+};
+
 export class SQSRouter extends BaseClient {
   queueName: string;
   handler: any;
   clientOptions: SQSClientOptions;
+  instances = [];
   constructor(
     queueName: string,
     handler: any,
@@ -24,16 +31,29 @@ export class SQSRouter extends BaseClient {
     }
 
     if (!clientOptions.messageTranslator) {
-      clientOptions.messageTranslator = new SNSQueueMessageTranslator();
-
-      if (clientOptions.messageSource === 'SQS') {
-        clientOptions.messageTranslator = new SQSMessageTranslator();
-      }
+      clientOptions.messageTranslator = new mapperTranslator[
+        clientOptions.messageSource
+      ]();
     }
 
     this.queueName = queueName;
     this.handler = handler;
     this.clientOptions = clientOptions;
+
+    process.on('SIGINT', this.prepareStop.bind(this));
+    process.on('SIGTERM', this.prepareStop.bind(this));
+  }
+
+  async prepareStop(): Promise<void> {
+    await this.stop();
+    process.exit();
+  }
+
+  async stop(): Promise<void> {
+    for (const instance of this.instances) {
+      await instance.stop();
+    }
+    await super.stop();
   }
 
   private async handlePrefixBasedQueues(
@@ -52,6 +72,7 @@ export class SQSRouter extends BaseClient {
 
     for (const queueUrl of data.QueueUrls) {
       const queueHandler = new handler(queueUrl, this.clientOptions);
+      this.instances.push(queueHandler);
       queueHandler.start();
     }
   }
@@ -62,6 +83,7 @@ export class SQSRouter extends BaseClient {
     }
 
     const queueHandler = new this.handler(this.queueName, this.clientOptions);
+    this.instances.push(queueHandler);
     queueHandler.start();
   }
 }
