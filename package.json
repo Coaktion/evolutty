@@ -182,7 +182,10 @@
         "lines": 100,
         "statements": 100
       }
-    }
+    },
+    "setupFiles": [
+      "<rootDir>/tests/setup.ts"
+    ]
   },
   "prettier": {
     "singleQuote": true,

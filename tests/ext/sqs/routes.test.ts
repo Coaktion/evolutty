@@ -47,17 +47,6 @@ describe('SQSRouter', () => {
     );
   });
 
-  it('should prepareStop and stop', async () => {
-    const clientOptions = {} as SQSClientOptions;
-    const router = new SQSRouter('test', Handler, clientOptions);
-    router.stop = jest.fn();
-    const processExit = jest.fn();
-    process.exit = processExit as unknown as (code?: number) => never;
-    await router.prepareStop();
-    expect(router.stop).toHaveBeenCalled();
-    expect(processExit).toHaveBeenCalled();
-  });
-
   it('should stop all instances', async () => {
     const clientOptions = {} as SQSClientOptions;
     const router = new SQSRouter('test', Handler, clientOptions);
@@ -65,8 +54,11 @@ describe('SQSRouter', () => {
       stop: jest.fn()
     };
     router.instances.push(instance);
+    const processExit = jest.fn();
+    process.exit = processExit as unknown as (code?: number) => never;
     await router.stop();
     expect(instance.stop).toHaveBeenCalled();
+    expect(processExit).toHaveBeenCalled();
   });
 
   it('should set message translator to SNSQueueMessageTranslator', () => {

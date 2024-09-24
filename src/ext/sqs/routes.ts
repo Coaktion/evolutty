@@ -40,22 +40,14 @@ export class SQSRouter extends BaseClient {
     this.handler = handler;
     this.clientOptions = clientOptions;
 
-    process.on('SIGINT', this.prepareStop.bind(this));
-    process.on('SIGTERM', this.prepareStop.bind(this));
-  }
-
-  async prepareStop(): Promise<void> {
-    await this.stop();
-    process.exit();
+    process.on('SIGINT', this.stop.bind(this));
+    process.on('SIGTERM', this.stop.bind(this));
   }
 
   async stop(): Promise<void> {
-    const promises = [];
-    for (const instance of this.instances) {
-      promises.push(instance.stop());
-    }
-    await Promise.all(promises);
+    await Promise.all(this.instances.map((instance) => instance.stop()));
     await super.stop();
+    process.exit();
   }
 
   private async handlePrefixBasedQueues(
