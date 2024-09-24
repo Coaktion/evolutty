@@ -50,9 +50,11 @@ export class SQSRouter extends BaseClient {
   }
 
   async stop(): Promise<void> {
+    const promises = [];
     for (const instance of this.instances) {
-      await instance.stop();
+      promises.push(instance.stop());
     }
+    await Promise.all(promises);
     await super.stop();
   }
 
