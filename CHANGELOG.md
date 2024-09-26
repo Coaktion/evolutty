@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.0](https://github.com/Coaktion/evolutty/compare/v2.1.3...v2.2.0) (2024-09-26)
+
+
+### Features
+
+* Add NODE_ENV variable to local.env ([1e0f444](https://github.com/Coaktion/evolutty/commit/1e0f444d1e495d15225cc11eddf76e0fa9e2e507))
+
+
+### Bug Fixes
+
+* Refactor message processing in SQSHandler ([4ecea98](https://github.com/Coaktion/evolutty/commit/4ecea98e4fcc16e3ecf5d59b8d1df6daf2841c3b))
+
 ### [2.1.3](https://github.com/Coaktion/evolutty/compare/v2.1.2...v2.1.3) (2024-08-23)
 
 ### [2.1.2](https://github.com/Coaktion/evolutty/compare/v2.1.1...v2.1.2) (2023-12-05)
