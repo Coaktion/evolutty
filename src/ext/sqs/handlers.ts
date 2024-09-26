@@ -70,12 +70,13 @@ export class SQSHandler extends BaseSQS {
       logging.info(
         `Received ${messages.length} messages from queue ${this.provider.queueName}`
       );
-      messages.forEach((message: any) => {
-        this.processMessage(message);
-      });
+      const promises = messages.map((message: any) =>
+        this.processMessage(message)
+      );
+      await Promise.all(promises);
     }
 
-    this.callPoll();
+    await this.callPoll();
   }
 
   async callPoll(): Promise<void> {
