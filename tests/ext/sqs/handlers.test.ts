@@ -33,11 +33,19 @@ describe('SQSHandler', () => {
     it('should stop the handler', () => {
       sqsHandler.started = true;
       sqsHandler.stop();
-      expect(sqsHandler.started).toBeFalsy();
+      expect(sqsHandler.started).toBeTruthy();
+      expect(sqsHandler.signalStop).toBeTruthy();
     });
 
     it('should not stop the handler if it is already stopped', () => {
       sqsHandler.started = false;
+      sqsHandler.stop();
+      expect(sqsHandler.started).toBeFalsy();
+    });
+
+    it('should stop the handler if the environment is local', () => {
+      process.env.NODE_ENV = 'local';
+      sqsHandler.started = true;
       sqsHandler.stop();
       expect(sqsHandler.started).toBeFalsy();
     });
@@ -206,6 +214,14 @@ describe('SQSHandler', () => {
       sqsHandler.poll = jest.fn().mockResolvedValue(true);
       await sqsHandler.callPoll();
       expect(sqsHandler.poll).toHaveBeenCalled();
+    });
+
+    it('should not call poll', async () => {
+      sqsHandler.signalStop = true;
+      sqsHandler.started = true;
+      sqsHandler.poll = jest.fn().mockResolvedValue(true);
+      await sqsHandler.callPoll();
+      expect(sqsHandler.poll).not.toHaveBeenCalled();
     });
   });
 
