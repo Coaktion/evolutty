@@ -1,4 +1,11 @@
-import { SQSHandler, SQSMessageTranslator, SQSProvider } from '../../../src';
+import {
+  DeleteMessage,
+  SQSHandler,
+  SQSMessageTranslator,
+  SQSProvider
+} from '../../../src';
+
+class ErrorExample extends DeleteMessage {}
 
 describe('SQSHandler', () => {
   let sqsHandler: SQSHandler;
@@ -57,7 +64,7 @@ describe('SQSHandler', () => {
         Body: 'message',
         ReceiptHandle: 'receiptHandle'
       };
-      const content = 'content';
+      const content = { content: 'content' };
       const metadata = 'metadata';
       sqsHandler.handle = jest.fn().mockResolvedValue(true);
       sqsHandler.provider.confirmMessage = jest.fn().mockResolvedValue(true);
@@ -74,7 +81,7 @@ describe('SQSHandler', () => {
         Body: 'message',
         ReceiptHandle: 'receiptHandle'
       };
-      const content = 'content';
+      const content = { content: 'content' };
       const metadata = 'metadata';
       sqsHandler.handle = jest.fn().mockResolvedValue(false);
       sqsHandler.provider.confirmMessage = jest.fn().mockResolvedValue(true);
@@ -91,9 +98,9 @@ describe('SQSHandler', () => {
         Body: 'message',
         ReceiptHandle: 'receiptHandle'
       };
-      const content = 'content';
+      const content = { content: 'content' };
       const metadata = 'metadata';
-      sqsHandler.handle = jest.fn().mockRejectedValue({ deleteMessage: true });
+      sqsHandler.handle = jest.fn().mockRejectedValue(new ErrorExample());
       sqsHandler.provider.confirmMessage = jest.fn().mockResolvedValue(true);
       sqsHandler.messageTranslator.translateMessage = jest
         .fn()
@@ -108,9 +115,9 @@ describe('SQSHandler', () => {
         Body: 'message',
         ReceiptHandle: 'receiptHandle'
       };
-      const content = 'content';
+      const content = { content: 'content' };
       const metadata = 'metadata';
-      sqsHandler.handle = jest.fn().mockRejectedValue({ delete: true });
+      sqsHandler.handle = jest.fn().mockRejectedValue(new Error('error'));
       sqsHandler.provider.confirmMessage = jest.fn().mockResolvedValue(true);
       sqsHandler.messageTranslator.translateMessage = jest
         .fn()
@@ -130,9 +137,9 @@ describe('SQSHandler', () => {
         Body: 'message',
         ReceiptHandle: 'receiptHandle'
       };
-      const content = 'content';
+      const content = { content: 'content' };
       const metadata = 'metadata';
-      sqsHandler.handle = jest.fn().mockRejectedValue({ deleteMessage: true });
+      sqsHandler.handle = jest.fn().mockRejectedValue(new ErrorExample());
       sqsHandler.provider.confirmMessage = jest.fn().mockResolvedValue(true);
       sqsHandler.messageTranslator.translateMessage = jest
         .fn()
@@ -150,9 +157,9 @@ describe('SQSHandler', () => {
         Body: 'message',
         ReceiptHandle: 'receiptHandle'
       };
-      const content = 'content';
+      const content = { content: 'content' };
       const metadata = 'metadata';
-      sqsHandler.handle = jest.fn().mockRejectedValue({ deleteMessage: true });
+      sqsHandler.handle = jest.fn().mockRejectedValue(new ErrorExample());
       sqsHandler.provider.confirmMessage = jest.fn().mockResolvedValue(true);
       sqsHandler.messageTranslator.translateMessage = jest
         .fn()

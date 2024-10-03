@@ -8,11 +8,22 @@ const logTransports = process.env.LOG_TRANSPORTS
   ? process.env.LOG_TRANSPORTS.split(',')
   : ['console'];
 
+const customFormat = format.printf(
+  ({ timestamp, level, message, context, data, stack }) => {
+    return `${timestamp} ${level.toUpperCase()}: ${context} - ${message} ${
+      data ? JSON.stringify(data) : ''
+    } ${stack || ''}`;
+  }
+);
+
 const logging = createLogger({
+  level,
   format: format.combine(
     format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
     format.errors({ stack: true }),
-    process.env.LOG_FORMAT ? format[process.env.LOG_FORMAT]() : format.json()
+    format.splat(),
+    format.json(),
+    customFormat
   ),
   transports: logTransports.map((transport: string) => {
     switch (transport.trim()) {
