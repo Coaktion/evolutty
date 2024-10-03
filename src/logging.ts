@@ -10,6 +10,16 @@ const logTransports = process.env.LOG_TRANSPORTS
 
 const customFormat = format.printf(
   ({ timestamp, level, message, context, data, stack }) => {
+    if (process.env.LOG_FORMAT === 'json') {
+      return JSON.stringify({
+        timestamp,
+        level,
+        message,
+        context,
+        data,
+        stack
+      });
+    }
     return `${timestamp} ${level.toUpperCase()}: ${context} - ${message} ${
       data ? JSON.stringify(data) : ''
     } ${stack || ''}`;
