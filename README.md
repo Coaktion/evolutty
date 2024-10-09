@@ -1,9 +1,8 @@
 # Evolutty
 
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/Coaktion/evolutty/issues)
 ![npm](https://img.shields.io/npm/dm/@coaktion/evolutty)
-[![Build Status](https://github.com/bbc/sqs-consumer/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/paulo-tinoco/evolutty/actions/workflows/test.yml)
-[![Maintainability](https://api.codeclimate.com/v1/badges/5b858ac139de92c496b9/maintainability)](https://codeclimate.com/github/paulo-tinoco/evolutty/maintainability)
-![Code Climate coverage](https://img.shields.io/codeclimate/coverage/paulo-tinoco/evolutty)
+[![Build Status](https://github.com/Coaktion/evolutty/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/Coaktion/evolutty/actions/workflows/test.yml)
 
 **evolutty** is an asynchronous message dispatcher for concurrent tasks processing, with the following features:
 
