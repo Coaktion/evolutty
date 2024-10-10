@@ -6,6 +6,7 @@ import { SQSProvider } from './providers';
 import { SQSClientOptions } from './types';
 
 export class SQSHandler extends BaseSQS {
+  readonly _name = Object.getPrototypeOf(this).constructor.name;
   provider: SQSProvider;
   messageTranslator: AbstractMessageTranslator;
   started: boolean;
@@ -31,7 +32,9 @@ export class SQSHandler extends BaseSQS {
 
   start(): void {
     if (!this.started) {
-      logging.info(`Starting AWS Queue ${this.provider.queueName}`);
+      logging.info(`Starting AWS Queue ${this.provider.queueName}`, {
+        context: this._name
+      });
       this.started = true;
       this.signalStop = false;
       this.poll();
@@ -47,9 +50,17 @@ export class SQSHandler extends BaseSQS {
         await this.provider.confirmMessage(message);
       }
     } catch (err) {
-      logging.error(`Error handling message ${JSON.stringify(err)}`);
+      logging.error(`Error handling message`, {
+        context: this._name,
+        data: content,
+        stack: err.stack
+      });
       if (err.deleteMessage) {
         await this.provider.confirmMessage(message);
+        logging.warn('Message deleted due to error', {
+          context: this._name,
+          data: content
+        });
       } else {
         await this.provider.messageNotProcessed(message);
       }
@@ -59,7 +70,8 @@ export class SQSHandler extends BaseSQS {
   async poll(): Promise<void> {
     if (!this.started) {
       logging.info(
-        `Poll was called while consumer was stopped, cancelling poll...`
+        `Poll was called while consumer was stopped, cancelling poll...`,
+        { context: this._name }
       );
       return void 0;
     }
@@ -68,7 +80,8 @@ export class SQSHandler extends BaseSQS {
     const messages = await this.provider.fetchMessages();
     if (messages) {
       logging.info(
-        `Received ${messages.length} messages from queue ${this.provider.queueName}`
+        `Received ${messages.length} messages from queue ${this.provider.queueName}`,
+        { context: this._name }
       );
       const promises = messages.map((message: any) =>
         this.processMessage(message)
@@ -82,7 +95,9 @@ export class SQSHandler extends BaseSQS {
   async callPoll(): Promise<void> {
     if (this.signalStop) {
       this.started = false;
-      logging.info(`AWS Queue ${this.provider.queueName} stopped`);
+      logging.info(`AWS Queue ${this.provider.queueName} stopped`, {
+        context: this._name
+      });
       return void 0;
     }
     await timeout(this.pollingWaitTimeMs);
