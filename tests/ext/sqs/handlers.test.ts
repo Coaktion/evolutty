@@ -25,6 +25,22 @@ describe('SQSHandler', () => {
       expect(sqsHandler.messageTranslator).toBeDefined();
       expect(sqsHandler.messageTranslator).toBeInstanceOf(SQSMessageTranslator);
     });
+
+    it.each([
+      [10000, 10000],
+      [20000, 20000],
+      [undefined, 10000]
+    ])(
+      `should create a new SQSHandler with waitTimePolling %s`,
+      (waitTimePolling, expected) => {
+        sqsHandler = new SQSHandler('queueName', {
+          visibilityTimeout: 10,
+          messageTranslator: new SQSMessageTranslator(),
+          waitTimePolling
+        });
+        expect(sqsHandler.pollingWaitTimeMs).toBe(expected);
+      }
+    );
   });
 
   describe('start', () => {

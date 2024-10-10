@@ -17,6 +17,7 @@ export type SQSClientOptions = {
   prefixBasedQueues?: boolean;
   maxNumberOfMessages?: number;
   waitTimeSeconds?: number;
+  waitTimePolling?: number;
 };
 
 export type SQSMessageAttributes = {
