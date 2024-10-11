@@ -2,6 +2,7 @@ import logging from '../../logging';
 import { AbstractMessageTranslator } from '../../message-translators';
 import { timeout } from '../../utils';
 import { BaseSQS } from './base';
+import { DEFAULT_WAIT_TIME_POLLING } from './constants';
 import { SQSProvider } from './providers';
 import { SQSClientOptions } from './types';
 
@@ -16,7 +17,8 @@ export class SQSHandler extends BaseSQS {
     super(clientOptions);
     this.provider = new SQSProvider(queueName, clientOptions);
     this.messageTranslator = clientOptions.messageTranslator;
-    this.pollingWaitTimeMs = 30000;
+    this.pollingWaitTimeMs =
+      clientOptions.waitTimePolling || DEFAULT_WAIT_TIME_POLLING;
   }
 
   async stop(): Promise<void> {
