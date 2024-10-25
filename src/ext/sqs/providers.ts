@@ -84,7 +84,8 @@ export class SQSProvider extends AbstractProvider {
         VisibilityTimeout:
           this.clientOptions.visibilityTimeout || DEFAULT_VISIBILITY_TIMEOUT,
         WaitTimeSeconds:
-          this.clientOptions.waitTimeSeconds || DEFAULT_WAIT_TIME_SECONDS
+          this.clientOptions.waitTimeSeconds || DEFAULT_WAIT_TIME_SECONDS,
+        MessageSystemAttributeNames: this.clientOptions.attributeNames || []
       })
     );
     return messages.Messages;

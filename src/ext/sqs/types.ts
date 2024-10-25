@@ -1,3 +1,4 @@
+import { MessageSystemAttributeName } from '@aws-sdk/client-sqs';
 import { AbstractMessageTranslator } from '../../message-translators';
 import { SNSQueueMessageTranslator } from './message-translators';
 
@@ -11,6 +12,7 @@ export type SQSClientOptions = {
   messageTranslator?: AbstractMessageTranslator;
   useSSL?: boolean;
   verifySSL?: boolean;
+  attributeNames?: MessageSystemAttributeName[];
   backoffFactor?: number;
   visibilityTimeout?: number;
   messageSource?: 'SQS' | 'SNS';
