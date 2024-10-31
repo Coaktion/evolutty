@@ -32,7 +32,6 @@ const logging = createLogger({
     format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
     format.errors({ stack: true }),
     format.splat(),
-    format.json(),
     customFormat
   ),
   transports: logTransports.map((transport: string) => {
