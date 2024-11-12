@@ -1,52 +1,61 @@
-import { Router } from '../src';
+import Router from '../src/routes';
 
-const provider = {
-  stop: () => {}
-};
-const handler = () => {};
-const messageTranslator = {
-  translate: (content: any) => {
+class MockProvider {}
+class MockHandler {}
+class MockMessageTranslator {
+  translate(message: string) {
     return {
-      content,
-      metadata: {}
+      content: `translated ${message}`,
+      metadata: { length: message.length }
     };
   }
-};
+}
+
+class TestRouter extends Router {
+  stop() {}
+}
 
 describe('Router', () => {
-  it('should return a router object', () => {
-    expect(Router).toBeDefined();
+  let router: TestRouter;
+  let mockProvider: MockProvider;
+  let mockHandler: MockHandler;
+  let mockMessageTranslator: MockMessageTranslator;
+
+  beforeEach(() => {
+    mockProvider = new MockProvider();
+    mockHandler = new MockHandler();
+    mockMessageTranslator = new MockMessageTranslator();
+    router = new TestRouter(mockProvider, mockHandler, mockMessageTranslator);
   });
 
-  it('applyMessageTranslator if not messageTranslator', () => {
-    const router = new Router(provider, handler);
-    const message = router.applyMessageTranslator('test');
-    expect(message).toEqual({
-      content: 'test',
-      metadata: {}
-    });
+  test('should initialize with given provider, handler, and messageTranslator', () => {
+    expect(router.provider).toBe(mockProvider);
+    expect(router.handler).toBe(mockHandler);
+    expect(router.messageTranslator).toBe(mockMessageTranslator);
   });
 
-  it('should throw an error when calling applyMessageTranslator', () => {
-    const router = new Router(provider, handler, messageTranslator);
-    expect(() => router.applyMessageTranslator('')).toThrowError(
+  test('should apply message translator correctly', () => {
+    const message = 'hello';
+    const result = router.applyMessageTranslator(message);
+    expect(result.content).toBe('translated hello');
+    expect(result.metadata).toEqual({ length: message.length });
+  });
+
+  test('should throw error if translated message has no content', () => {
+    const faultyTranslator = {
+      translate: () => ({ content: '', metadata: {} })
+    };
+    router = new TestRouter(mockProvider, mockHandler, faultyTranslator);
+    expect(() => router.applyMessageTranslator('hello')).toThrow(
       'Translated message must have a content'
     );
   });
 
-  it('must bring translated content through the custom method', () => {
-    const router = new Router(provider, handler, messageTranslator);
-    const message = router.applyMessageTranslator('test');
-    expect(message).toEqual({
-      content: 'test',
-      metadata: {}
-    });
-  });
-
-  it('should calling stop provider when call stop router method', () => {
-    const router = new Router(provider, handler);
-    const spy = jest.spyOn(provider, 'stop');
-    router.stop();
-    expect(spy).toHaveBeenCalled();
+  test('should return original message if no messageTranslator is provided', () => {
+    router = new TestRouter(mockProvider, mockHandler);
+    const message = 'hello';
+    const result = router.applyMessageTranslator(message);
+    expect(result.content).toBe(message);
+    expect(result.metadata).toEqual({});
   });
 });

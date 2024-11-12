@@ -1,4 +1,4 @@
-import logging from './logging';
+import { LoggerService } from './logging';
 import { RoutesType } from './types';
 
 /**
@@ -9,7 +9,7 @@ import { RoutesType } from './types';
  * const evolutty = new EvoluttyManager(routes);
  * evolutty.start();
  */
-class EvoluttyManager {
+class EvoluttyManager extends LoggerService {
   routes: RoutesType[];
   /**
    * Creates an instance of EvoluttyManager.
@@ -17,6 +17,7 @@ class EvoluttyManager {
    * @memberof EvoluttyManager
    */
   constructor(routes: RoutesType[]) {
+    super();
     this.routes = routes;
   }
 
@@ -37,7 +38,7 @@ class EvoluttyManager {
         route.routeParams
       ).start();
     }
-    logging.info('Evolutty started');
+    this.info('Evolutty started');
   }
 }
 

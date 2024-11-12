@@ -1,37 +1,11 @@
-class AbstractProvider {
-  async fetchMessages(): Promise<object[]> {
-    /**
-     * Returns a list of messages from the provider.
-     * if not messages are available, returns an empty list.
-     */
-    throw new Error('Method not implemented.');
-  }
+abstract class AbstractProvider {
+  abstract fetchMessages(): Promise<object[]>;
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async confirmMessage(message: object): Promise<any> {
-    /**
-     * Confirm a message as processed.
-     * After the message confirmation we should not receive the same message again.
-     * This usually means we need to delete the message in the provider.
-     */
-    throw new Error('Method not implemented.');
-  }
+  abstract confirmMessage(message: object): Promise<any>;
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async messageNotProcessed(message: object): Promise<any> {
-    /**
-     * Perform actions when a message was not processed.
-     */
-    throw new Error('Method not implemented.');
-  }
+  abstract messageNotProcessed(message: object): Promise<any>;
 
-  stop() {
-    /**
-     * Stop the provider.
-     * If needed, this method should close the connection with the provider.
-     */
-    throw new Error('Method not implemented.');
-  }
+  abstract stop(): void;
 }
 
 export default AbstractProvider;

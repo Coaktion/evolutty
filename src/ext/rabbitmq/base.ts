@@ -1,12 +1,14 @@
 import { Channel, connect } from 'amqplib';
 
+import { LoggerService } from '../../logging';
 import { RabbitMQClientOptions } from './types';
 
-export class BaseClient {
+export class BaseClient extends LoggerService {
   queueName: string;
   clientOptions: RabbitMQClientOptions;
 
   constructor(queuName: string, clientOptions: RabbitMQClientOptions) {
+    super();
     this.queueName = queuName;
     this.clientOptions = clientOptions;
   }

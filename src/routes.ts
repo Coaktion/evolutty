@@ -1,6 +1,6 @@
 import AbstractProvider from './providers';
 
-class Router {
+abstract class Router {
   provider: AbstractProvider | any;
   messageTranslator: any;
   handler: any;
@@ -30,9 +30,7 @@ class Router {
     return processedMessage;
   }
 
-  stop() {
-    this.provider.stop();
-  }
+  abstract stop(): void;
 }
 
 export default Router;
