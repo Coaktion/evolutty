@@ -1,7 +1,6 @@
 import { GetQueueUrlCommand, SQSClient } from '@aws-sdk/client-sqs';
 
 import { LoggerService } from '../../logging';
-// Replace with the actual path to LoggerService
 import { SQSClientOptions } from './types';
 
 export class BaseClient {
