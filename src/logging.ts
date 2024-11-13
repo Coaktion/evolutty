@@ -3,7 +3,7 @@ import { Logger, createLogger, format, transports } from 'winston';
 export class LoggerService {
   private logger: Logger;
 
-  constructor() {
+  constructor(context?: string) {
     const level = process.env.LOG_LEVEL || 'info';
     const filename = process.env.LOG_OUTPUT_FILE || 'evolutty.log';
     const logTransports = process.env.LOG_TRANSPORTS
@@ -12,7 +12,6 @@ export class LoggerService {
 
     const customFormat = format.printf(
       ({ timestamp, level, message, data, stack }) => {
-        const context = this.constructor.name;
         if (process.env.LOG_FORMAT === 'json') {
           return JSON.stringify({
             timestamp,

@@ -21,7 +21,7 @@ export class SQSHandler extends BaseSQS {
 
   async stop(): Promise<void> {
     this.signalStop = true;
-    this.info(`Stopping AWS Queue ${this.provider.queueName}`);
+    this.logger.info(`Stopping AWS Queue ${this.provider.queueName}`);
     if (process.env.NODE_ENV === 'local') {
       this.started = false;
     }
@@ -32,7 +32,7 @@ export class SQSHandler extends BaseSQS {
 
   start(): void {
     if (!this.started) {
-      this.info(`Starting AWS Queue ${this.provider.queueName}`);
+      this.logger.info(`Starting AWS Queue ${this.provider.queueName}`);
       this.started = true;
       this.signalStop = false;
       this.poll();
@@ -48,13 +48,13 @@ export class SQSHandler extends BaseSQS {
         await this.provider.confirmMessage(message);
       }
     } catch (err) {
-      this.error(`Error handling message`, {
+      this.logger.error(`Error handling message`, {
         data: content,
         stack: err.stack
       });
       if (err.deleteMessage) {
         await this.provider.confirmMessage(message);
-        this.warn('Message deleted due to error', {
+        this.logger.warn('Message deleted due to error', {
           data: content
         });
       } else {
@@ -65,16 +65,16 @@ export class SQSHandler extends BaseSQS {
 
   async poll(): Promise<void> {
     if (!this.started) {
-      this.info(
+      this.logger.info(
         `Poll was called while consumer was stopped, cancelling poll...`
       );
       return void 0;
     }
 
-    this.info(`Polling AWS Queue ${this.provider.queueName}`);
+    this.logger.info(`Polling AWS Queue ${this.provider.queueName}`);
     const messages = await this.provider.fetchMessages();
     if (messages) {
-      this.info(
+      this.logger.info(
         `Received ${messages.length} messages from queue ${this.provider.queueName}`
       );
       const promises = messages.map((message: any) =>
@@ -89,7 +89,7 @@ export class SQSHandler extends BaseSQS {
   async callPoll(): Promise<void> {
     if (this.signalStop) {
       this.started = false;
-      this.info(`AWS Queue ${this.provider.queueName} stopped`);
+      this.logger.info(`AWS Queue ${this.provider.queueName} stopped`);
       return void 0;
     }
     await timeout(this.pollingWaitTimeMs);

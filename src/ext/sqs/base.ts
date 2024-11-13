@@ -4,11 +4,12 @@ import { LoggerService } from '../../logging';
 // Replace with the actual path to LoggerService
 import { SQSClientOptions } from './types';
 
-export class BaseClient extends LoggerService {
+export class BaseClient {
   client: SQSClient;
+  logger: LoggerService;
   constructor(clientOptions: SQSClientOptions) {
-    super();
     this.client = new SQSClient(clientOptions);
+    this.logger = new LoggerService(this.constructor.name);
   }
 
   async stop() {
