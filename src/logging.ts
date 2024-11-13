@@ -52,14 +52,8 @@ export class LoggerService {
     });
   }
 
-  log(
-    level: string,
-    message: string,
-    context?: string,
-    data?: any,
-    stack?: string
-  ) {
-    this.logger.log({ level, message, context, data, stack });
+  log(level: string, message: string, data?: any, stack?: string) {
+    this.logger.log({ level, message, data, stack });
   }
 
   info(message: string, data?: any) {
