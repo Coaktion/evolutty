@@ -1,7 +1,7 @@
 import { AbstractMessageTranslator } from '../../message-translators';
 import { MessageTranslated } from './types';
 
-class BaseMessageTranslator extends AbstractMessageTranslator {
+abstract class BaseMessageTranslator extends AbstractMessageTranslator {
   translateMessage(content: any, metadata: any): MessageTranslated {
     return {
       content: JSON.parse(content),

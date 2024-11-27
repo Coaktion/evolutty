@@ -1,11 +1,14 @@
 import { GetQueueUrlCommand, SQSClient } from '@aws-sdk/client-sqs';
 
+import { LoggerService } from '../../logging';
 import { SQSClientOptions } from './types';
 
 export class BaseClient {
   client: SQSClient;
+  logger: LoggerService;
   constructor(clientOptions: SQSClientOptions) {
     this.client = new SQSClient(clientOptions);
+    this.logger = new LoggerService(this.constructor.name);
   }
 
   async stop() {

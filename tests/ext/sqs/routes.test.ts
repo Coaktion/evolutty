@@ -6,8 +6,7 @@ import {
   SQSClientOptions,
   SQSHandler,
   SQSMessageTranslator,
-  SQSRouter,
-  logging
+  SQSRouter
 } from '../../../src';
 
 class Handler extends SQSHandler {
@@ -132,8 +131,6 @@ describe('SQSRouter', () => {
 
       SQSClient.prototype.send = mockSend;
       SQSClient.prototype.destroy = jest.fn();
-      logging.error = jest.fn();
-
       const router = new SQSRouter('test', Handler, clientOptions);
 
       await router.start();
